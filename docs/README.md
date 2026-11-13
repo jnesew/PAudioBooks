@@ -11,6 +11,7 @@
 - [Signing](SIGNING.md): unsigned artifacts, signing identity, and manual APK signing.
 - [Forking](FORKING.md): license, independent app identity, and distribution considerations.
 - [Demo library](demo/README.md): fictional screenshot content and reproducible media generation.
+- [Documentation assets](assets/README.md): Obtainium badge source and license.
 
 ## Product and technical specifications
 

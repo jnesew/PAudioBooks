@@ -3,7 +3,7 @@
 An offline audiobook player for Android 8.0 and newer. Listen to your own local
 books without an account, internet connection, or Google Play services.
 
-[![Add to Obtainium](docs/assets/obtainium.svg)](https://apps.obtainium.imranr.dev/redirect?r=obtainium%3A%2F%2Fapp%2F%257B%2522id%2522%253A%2522io.github.jnesew.paudiobooks%2522%252C%2522url%2522%253A%2522https%253A%252F%252Fgithub.com%252Fjnesew%252FPAudioBooks%2522%252C%2522author%2522%253A%2522jnesew%2522%252C%2522name%2522%253A%2522PAudioBooks%2522%257D)
+[<img src="docs/assets/obtainium.png" alt="Get PAudioBooks on Obtainium" width="200">](https://apps.obtainium.imranr.dev/redirect?r=obtainium%3A%2F%2Fapp%2F%257B%2522id%2522%253A%2522io.github.jnesew.paudiobooks%2522%252C%2522url%2522%253A%2522https%253A%252F%252Fgithub.com%252Fjnesew%252FPAudioBooks%2522%252C%2522author%2522%253A%2522jnesew%2522%252C%2522name%2522%253A%2522PAudioBooks%2522%257D)
 
 [Releases](https://github.com/jnesew/PAudioBooks/releases) ·
 [Usage guide](docs/USAGE.md) · [Build from source](docs/BUILDING.md)
