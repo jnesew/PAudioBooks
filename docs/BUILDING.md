@@ -21,7 +21,7 @@ or create an ignored root `local.properties` with `sdk.dir` set to that director
 Keep machine paths out of tracked files. Put Platform Tools and the selected
 Build Tools on your command path when using `adb`, `apksigner`, or `zipalign`.
 
-Use the checked-in wrapper, which pins Gradle 9.6.0. AGP 9.4.0, Kotlin, AndroidX,
+Use the checked-in wrapper, which pins Gradle 9.9.1. AGP 9.4.0, Kotlin, AndroidX,
 and Media3 pins are in [the version catalog](../gradle/libs.versions.toml).
 The app uses minSdk 26 and compile/target SDK 37. Repository configuration is the
 source of truth for these versions; do not replace it with global Gradle settings.

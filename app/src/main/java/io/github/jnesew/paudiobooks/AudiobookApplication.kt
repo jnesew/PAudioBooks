@@ -22,6 +22,7 @@ class AudiobookApplication : Application() {
     internal val documentAccess by lazy { io.github.jnesew.paudiobooks.storage.BoundedDocumentAccess(contentResolver) }
     val importer by lazy { ImportCoordinator(library, audioStore, contentResolver) { sourceGrants.collectUnused() } }
     internal val linker by lazy { io.github.jnesew.paudiobooks.importing.LinkedImportCoordinator(library,audioStore,importer,sourceGrants,documentAccess,inspector,io.github.jnesew.paudiobooks.importing.DocumentInventory(contentResolver)) }
+    internal val transferDocuments by lazy { io.github.jnesew.paudiobooks.portability.TransferDocumentAccess(contentResolver) }
     val inspector by lazy { MetadataInspector(this) }
     // Lazy: the isolated inspection process must not initialize the main library.
     val cleanupScope by lazy { CoroutineScope(SupervisorJob() + Dispatchers.IO) }

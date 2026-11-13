@@ -55,7 +55,10 @@ rules; `PlaybackService` retains the sole player/session and platform callbacks.
 `LibraryViewModel` retains import work, cancellation and staged-journal ownership.
 Its `ProgressTransfer` collaborator owns transfer preview/export/apply and journal
 recovery in the same ViewModel coroutine scope; it reports errors through a
-callback and does not own a player or retain an Activity. About/privacy content,
+callback and does not own a player or retain an Activity. The app container owns one
+bounded transfer-document worker across ViewModels. JSON preparation/matching is
+separate from provider streams; streaming validation limits records and skipped
+unknown values before allocation. See [decision 0008](decisions/0008-security-updates.md). About/privacy content,
 license navigation and bounded license-asset loading are separate concerns.
 
 Follow Android's [state-holder guidance](https://developer.android.com/topic/architecture/ui-layer/stateholders):

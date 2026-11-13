@@ -132,4 +132,8 @@ Settings defaults to System theme, 1.00× default speed, 10 s / 30 s skips, smar
 rewind off, and lock-screen details on. Theme changes preserve playback/navigation.
 Storage omits zero private-audio usage; actual retained audio is Audio stored in app.
 Progress transfer is explicit with preview/conflicts and privacy explanation.
+Its Working dialog offers Cancel during document read/export preparation and I/O;
+Back/outside dismissal cancels that work too. Applying an approved replacement
+transaction remains non-dismissible. A timeout returns to the screen with recovery
+text; cancellation or failure can leave an incomplete export, which must be stated.
 About/privacy/licenses open on demand; technical diagnostics stay outside listening.

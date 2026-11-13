@@ -1,0 +1,2 @@
+# Generated Windows wrapper intentionally uses CRLF.
+gradlew.bat whitespace=cr-at-eol

@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "Selected Runtime Components License Inventory (Pre-Shrinking Conservative Baseline)",
-    "timestamp": "2026-11-01T20:00:00Z",
+    "timestamp": "2026-11-13T00:00:00Z",
     "total_gradle_selected_artifact_records": 94,
     "total_unique_components": 93,
     "multifile_component_note": "androidx.core:core:1.18.0 is selected under 2 variant publications (releaseVariantReleaseRuntimePublication and adhoc variant) referencing the exact same physical archive core-1.18.0.aar (SHA-256: 311d83ac67d394076ec21d12ed2d10a44b59cb2929b7dce00e5a90a93842e37d).",
@@ -779,21 +779,21 @@
     },
     {
       "coordinate": "com.google.guava:failureaccess",
-      "version": "1.0.2",
-      "variant_name": "com.google.guava:failureaccess:1.0.2 configuration runtime",
-      "file_name": "failureaccess-1.0.2.jar",
-      "file_length": 4740,
+      "version": "1.0.3",
+      "variant_name": "com.google.guava:failureaccess:1.0.3 configuration runtime",
+      "file_name": "failureaccess-1.0.3.jar",
+      "file_length": 10763,
       "storage_origin": "modules_2_files_2_1",
-      "sha256": "8a8f81cf9b359e3f6dfa691a1e776985c061ef2f223c9b2c80753e1b458e8064"
+      "sha256": "cbfc3906b19b8f55dd7cfd6dfe0aa4532e834250d7f080bd8d211a3e246b59cb"
     },
     {
       "coordinate": "com.google.guava:guava",
-      "version": "33.3.1-android",
-      "variant_name": "com.google.guava:guava:33.3.1-android variant androidRuntimeElements",
-      "file_name": "guava-33.3.1-android.jar",
-      "file_length": 2918070,
+      "version": "33.7.2-android",
+      "variant_name": "com.google.guava:guava:33.7.2-android variant androidRuntimeElements",
+      "file_name": "guava-33.7.2-android.jar",
+      "file_length": 2982159,
       "storage_origin": "modules_2_files_2_1",
-      "sha256": "2c3e41d1b380f2044d257947a3aa82dabf3ae4b978622745254aa18b6cf89ab0"
+      "sha256": "b949fe975a32421c1a2633c07a4f1578b462f2f467668aa0a4023c5ff7c4a808"
     },
     {
       "coordinate": "com.google.guava:listenablefuture",
@@ -815,12 +815,12 @@
     },
     {
       "coordinate": "org.jetbrains.kotlin:kotlin-stdlib",
-      "version": "2.2.20",
-      "variant_name": "org.jetbrains.kotlin:kotlin-stdlib:2.2.20 variant jvmRuntimeElements",
-      "file_name": "kotlin-stdlib-2.2.20.jar",
-      "file_length": 1761444,
+      "version": "2.4.21",
+      "variant_name": "org.jetbrains.kotlin:kotlin-stdlib:2.4.21 variant jvmRuntimeElements",
+      "file_name": "kotlin-stdlib-2.4.21.jar",
+      "file_length": 1853315,
       "storage_origin": "modules_2_files_2_1",
-      "sha256": "8836ccffd3585fadda9901244b20d42901d2f3cd581058d8434e2ffabcf3a3e7"
+      "sha256": "bd8250210584cb659847dce9cda660f8e9906e5def7fbebcea93dc6dcb6a88a3"
     },
     {
       "coordinate": "org.jetbrains.kotlinx:atomicfu-jvm",
@@ -869,12 +869,12 @@
     },
     {
       "coordinate": "org.jspecify:jspecify",
-      "version": "1.0.0",
-      "variant_name": "org.jspecify:jspecify:1.0.0 variant runtimeElements",
-      "file_name": "jspecify-1.0.0.jar",
-      "file_length": 3819,
+      "version": "1.0.1",
+      "variant_name": "org.jspecify:jspecify:1.0.1 variant runtimeElements",
+      "file_name": "jspecify-1.0.1.jar",
+      "file_length": 3064,
       "storage_origin": "modules_2_files_2_1",
-      "sha256": "1fad6e6be7557781e4d33729d49ae1cdc8fdda6fe477bb0cc68ce351eafdfbab"
+      "sha256": "070d75f261fe4c5b8202508366715f7f2d4660f88c8ef7e6d3575e48c9683b66"
     }
   ],
   "unique_selected_components": [
@@ -1946,26 +1946,26 @@
     },
     {
       "coordinate": "com.google.guava:failureaccess",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "packaging": "jar",
-      "archive_name": "failureaccess-1.0.2.jar",
-      "archive_sha256": "8a8f81cf9b359e3f6dfa691a1e776985c061ef2f223c9b2c80753e1b458e8064",
+      "archive_name": "failureaccess-1.0.3.jar",
+      "archive_sha256": "cbfc3906b19b8f55dd7cfd6dfe0aa4532e834250d7f080bd8d211a3e246b59cb",
       "license": "The Apache Software License, Version 2.0",
       "upstream_url": null,
-      "has_embedded_license": false,
+      "has_embedded_license": true,
       "has_embedded_notice": false,
       "gradle_selected_record_count": 1,
       "storage_origin": "modules_2_files_2_1"
     },
     {
       "coordinate": "com.google.guava:guava",
-      "version": "33.3.1-android",
+      "version": "33.7.2-android",
       "packaging": "jar",
-      "archive_name": "guava-33.3.1-android.jar",
-      "archive_sha256": "2c3e41d1b380f2044d257947a3aa82dabf3ae4b978622745254aa18b6cf89ab0",
+      "archive_name": "guava-33.7.2-android.jar",
+      "archive_sha256": "b949fe975a32421c1a2633c07a4f1578b462f2f467668aa0a4023c5ff7c4a808",
       "license": "Apache License, Version 2.0",
       "upstream_url": "https://github.com/google/guava",
-      "has_embedded_license": false,
+      "has_embedded_license": true,
       "has_embedded_notice": false,
       "gradle_selected_record_count": 1,
       "storage_origin": "modules_2_files_2_1"
@@ -1998,10 +1998,10 @@
     },
     {
       "coordinate": "org.jetbrains.kotlin:kotlin-stdlib",
-      "version": "2.2.20",
+      "version": "2.4.21",
       "packaging": "jar",
-      "archive_name": "kotlin-stdlib-2.2.20.jar",
-      "archive_sha256": "8836ccffd3585fadda9901244b20d42901d2f3cd581058d8434e2ffabcf3a3e7",
+      "archive_name": "kotlin-stdlib-2.4.21.jar",
+      "archive_sha256": "bd8250210584cb659847dce9cda660f8e9906e5def7fbebcea93dc6dcb6a88a3",
       "license": "Apache-2.0",
       "upstream_url": "https://kotlinlang.org/",
       "has_embedded_license": false,
@@ -2076,10 +2076,10 @@
     },
     {
       "coordinate": "org.jspecify:jspecify",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "packaging": "jar",
-      "archive_name": "jspecify-1.0.0.jar",
-      "archive_sha256": "1fad6e6be7557781e4d33729d49ae1cdc8fdda6fe477bb0cc68ce351eafdfbab",
+      "archive_name": "jspecify-1.0.1.jar",
+      "archive_sha256": "070d75f261fe4c5b8202508366715f7f2d4660f88c8ef7e6d3575e48c9683b66",
       "license": "The Apache License, Version 2.0",
       "upstream_url": "http://jspecify.org/",
       "has_embedded_license": false,

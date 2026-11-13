@@ -50,7 +50,9 @@ internal fun PortabilityControls(books: List<BookSummary>, playback: PlaybackCon
         text = { Text(stringResource(if (explain == true) R.string.export_explanation else R.string.import_explanation)) },
         confirmButton = { TextButton(onClick = { val exporting = explain == true; explain = null; if (exporting) export.launch("paudiobooks-progress.json") else import.launch("") }) { Text(stringResource(R.string.continue_label)) } },
         dismissButton = { TextButton(onClick = { explain = null }) { Text(stringResource(R.string.cancel)) } })
-    if (transfer.busy) AlertDialog(onDismissRequest = {}, title = { Text(stringResource(R.string.working)) }, text = { CircularProgressIndicator() }, confirmButton = {})
+    if (transfer.busy) AlertDialog(onDismissRequest = model::cancelTransfer,
+        title = { Text(stringResource(R.string.working)) }, text = { CircularProgressIndicator() },
+        confirmButton = { if (transfer.cancellable) TextButton(onClick = model::cancelTransfer) { Text(stringResource(R.string.cancel)) } })
     if (transfer.complete) AlertDialog(onDismissRequest = model::dismissTransferComplete, title = { Text(stringResource(R.string.transfer_complete)) }, confirmButton = { TextButton(onClick = model::dismissTransferComplete) { Text(stringResource(R.string.ok)) } })
     preview?.let { data -> AlertDialog(onDismissRequest = model::dismissTransferPreview, title = { Text(stringResource(R.string.review_progress)) }, text = {
         Column(Modifier.heightIn(max = 400.dp).verticalScroll(rememberScrollState())) {

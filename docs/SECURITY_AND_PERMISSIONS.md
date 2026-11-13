@@ -154,6 +154,14 @@ differently, so verify rules and representative transfer behavior instead of
 promising that a manifest flag controls every OEM tool. See
 [Android backup and extraction rules](https://developer.android.com/identity/data/autobackup).
 
+Manual transfer uses streaming schema validation with token, field, count, nesting
+and byte budgets before allocating each next record. Provider calls have a bounded
+worker, deadline, explicit cancellation and close ownership; a stuck call keeps its
+admission guard until the real work/cleanup exits. Late results do not revive UI.
+See [decision 0008](decisions/0008-security-updates.md) for these limits and dependency
+security updates. Neither coroutine cancellation alone nor a byte cap bounds a
+provider that stops responding.
+
 Manual export is an explicit user exception for portability, not sync. Write a
 versioned JSON document through the local-only picker; explain its unencrypted
 notes/progress content. Exclude audio, raw paths, grants, diagnostics, and caches.

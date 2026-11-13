@@ -12,7 +12,10 @@ import io.github.jnesew.paudiobooks.portability.PortabilitySelection
 import io.github.jnesew.paudiobooks.portability.ProgressPortability
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -20,6 +23,7 @@ import kotlinx.coroutines.withContext
 
 internal data class TransferUi(
     val busy: Boolean = false,
+    val cancellable: Boolean = false,
     val preview: PortabilityPreview? = null,
     val complete: Boolean = false
 )
@@ -35,24 +39,42 @@ internal class ProgressTransfer(
     private val transferService = ProgressPortability(app.library)
     private val _transfer = MutableStateFlow(TransferUi())
     val transfer = _transfer.asStateFlow()
+    private var transferJob: Job? = null
+    fun cancelTransfer() { if (_transfer.value.cancellable) transferJob?.cancel() }
 
     fun dismissTransferPreview() { _transfer.value = _transfer.value.copy(preview = null) }
     fun dismissTransferComplete() { _transfer.value = _transfer.value.copy(complete = false) }
     fun exportProgress(uri: Uri, controller: MediaController?, hasTrack: Boolean) {
         if (_transfer.value.busy) return
-        scope.launch {
-            _transfer.value = _transfer.value.copy(busy = true)
+        if (app.transferDocuments.busy) { onError(R.string.transfer_document_busy); return }
+        _transfer.value = _transfer.value.copy(busy = true, cancellable = true)
+        transferJob = scope.launch(start = CoroutineStart.UNDISPATCHED) {
             try {
                 require(uri.scheme == ContentResolver.SCHEME_CONTENT)
                 if (hasTrack && controller?.pauseAndSave() != true) error("save")
-                withContext(Dispatchers.IO) {
+                val encoded = withContext(Dispatchers.IO) {
                     requireVerifiedAudio()
+                    transferService.encode()
+                }
+                withContext(Dispatchers.IO) {
                     check(transferJournal.edit().putBoolean("export_in_progress", true).commit())
-                    app.contentResolver.openOutputStream(uri, "wt")?.use { transferService.export(it) } ?: error("output")
+                }
+                app.transferDocuments.write(uri, encoded)
+                withContext(Dispatchers.IO) {
                     check(transferJournal.edit().remove("export_in_progress").commit())
                 }
                 _transfer.value = _transfer.value.copy(complete = true)
-            } catch (cancel: CancellationException) { throw cancel }
+            } catch (cancel: CancellationException) {
+                // The provider may have already truncated/written the chosen document.
+                // Keep the journal on scope destruction; explicit Cancel reports the partial export.
+                if (scope.coroutineContext[Job]?.isActive != false) {
+                    withContext(NonCancellable + Dispatchers.IO) {
+                        transferJournal.edit().remove("export_in_progress").commit()
+                    }
+                    onError(R.string.export_incomplete)
+                }
+                throw cancel
+            }
             catch (failure: Exception) {
                 withContext(Dispatchers.IO) { transferJournal.edit().remove("export_in_progress").commit() }
                 onError(if (failure is UnverifiedLinkedAudioException) {
@@ -61,22 +83,22 @@ internal class ProgressTransfer(
                     R.string.export_incomplete
                 })
             }
-            finally { _transfer.value = _transfer.value.copy(busy = false) }
+            finally { _transfer.value = _transfer.value.copy(busy = false, cancellable = false) }
         }
     }
     fun previewProgress(uri: Uri) {
         if (_transfer.value.busy) return
-        scope.launch {
-            _transfer.value = _transfer.value.copy(busy = true)
+        if (app.transferDocuments.busy) { onError(R.string.transfer_document_busy); return }
+        _transfer.value = _transfer.value.copy(busy = true, cancellable = true)
+        transferJob = scope.launch(start = CoroutineStart.UNDISPATCHED) {
             try {
                 require(uri.scheme == ContentResolver.SCHEME_CONTENT)
-                val preview = withContext(Dispatchers.IO) {
-                    app.contentResolver.openInputStream(uri)?.use { transferService.preview(it) } ?: error("input")
-                }
+                val bytes = app.transferDocuments.read(uri)
+                val preview = transferService.preview(java.io.ByteArrayInputStream(bytes))
                 _transfer.value = _transfer.value.copy(preview = preview)
             } catch (cancel: CancellationException) { throw cancel }
             catch (_: Exception) { onError(R.string.portability_failed) }
-            finally { _transfer.value = _transfer.value.copy(busy = false) }
+            finally { _transfer.value = _transfer.value.copy(busy = false, cancellable = false) }
         }
     }
     fun applyProgress(

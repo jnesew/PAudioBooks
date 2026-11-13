@@ -1,0 +1,30 @@
+import groovy.json.JsonOutput
+gradle.projectsEvaluated {
+ rootProject.tasks.register('dependencySecurityInventory') {
+  notCompatibleWithConfigurationCache('Inspects resolved dependency configurations for an explicit security review')
+  doLast {
+   def rows = []
+   def failures = []
+   def capture = { project, label, configuration ->
+    try {
+     configuration.incoming.resolutionResult.allComponents.each { c ->
+      def id = c.id
+      if (id instanceof org.gradle.api.artifacts.component.ModuleComponentIdentifier) {
+       rows << [project: project.path, configuration: label, name: id.group+':'+id.module, version: id.version]
+      }
+     }
+     configuration.resolvedConfiguration.rethrowFailure()
+    } catch (Exception e) { failures << [project:project.path, configuration:label, error:e.message] }
+   }
+   rootProject.allprojects.each { project ->
+    capture(project, 'buildscript.classpath', project.buildscript.configurations.classpath)
+    project.configurations.findAll { it.canBeResolved }.each { conf -> capture(project, conf.name, conf) }
+   }
+   def out = new File(rootProject.projectDir, 'app/build/reports/dependency-inventory.json')
+   out.parentFile.mkdirs()
+   out.text = JsonOutput.prettyPrint(JsonOutput.toJson([components:rows, failures:failures]))
+   println('Inventory: '+rows.size()+' records; failures: '+failures.size())
+   if (!failures.isEmpty()) throw new GradleException('Dependency inventory is incomplete; inspect '+out)
+  }
+ }
+}

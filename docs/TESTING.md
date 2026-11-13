@@ -31,6 +31,34 @@ a complete historical schema/transfer matrix is outside the pre-release scope.
 The [CI workflow](../.github/workflows/android.yml) runs a subset of these host
 checks. Its presence does not establish that a remote run passed.
 
+## Dependency advisory review
+
+The wrapper distribution and JVM/SDK updates need upstream security review as well
+as project dependencies. To inventory every resolved plugin, lint, KSP, compile,
+runtime and test configuration and query its public Maven names/versions against
+OSV, run:
+
+```sh
+./gradlew --no-daemon --dependency-verification strict -I tools/verification/dependency_inventory.init.gradle dependencySecurityInventory --console plain
+python3 tools/verification/check_advisories.py app/build/reports/dependency-inventory.json --output app/build/reports/dependency-advisories.json
+```
+
+The second command requires network access and sends only package coordinates and
+versions. It fails on matched advisories, incomplete inventory/API responses, and
+unfinished pagination. Review scopes/reachability and upstream fixes; no match is
+not proof of safety. The inventory does not include jars bundled inside Gradle,
+the JDK, SDK executables, or the OS; review their official advisories separately.
+[Decision 0008](decisions/0008-security-updates.md) records current security pins
+and the remaining vendor-bundled Guava advisory. Retain exact dated results locally.
+No online advisory service is required by the installed app or the build workflow.
+
+For a clean-cache reproduction of CI verification, set `GRADLE_USER_HOME` to a new
+empty ignored directory and use a separate `--project-cache-dir`. Run the workflow's
+actual tasks without `--offline`, then run the release dependency/manifest gate.
+Do not populate the fresh dependency cache by copying the ordinary cache. This
+exposes parent-POM and module metadata missing from a warm-cache review. Do not
+regenerate checksums as an automatic response to a failure.
+
 ## Device setup and instrumentation
 
 Use a GMS-free AOSP emulator for offline verification and stock physical hardware
@@ -82,6 +110,17 @@ restore the device's exact locale, font, rotation, and theme values, and assert
 the Activity actually entered the intended configuration. Test both themes,
 200% text, RTL, keyboard/IME, TalkBack, and switch access. Native UI assertions
 do not substitute for a listener's assistive-technology journey.
+
+## Transfer security regression suites
+
+The native `TransferJsonTest`, `TransferDocumentAccessTest`,
+`ProgressTransferCancellationTest` and `ProgressPortabilityTest` cover hostile-width
+JSON, token/count/type/UTF-8 bounds, provider denial and blocked-open cancellation,
+late completion, matching, version compatibility and transactional progress retention.
+`BoundedTransferWorkerTest` is a JVM suite for stuck open/read/write/close and
+cancellation callbacks, retry admission, late resources and close failures.
+Run these on API 26/current GMS-free images after a matching successful build; keep
+physical-provider behavior and the actual signed artifact as separate gates.
 
 ## Lifecycle and fault tools
 

@@ -16,14 +16,16 @@ ViewModel Compose variants. These are Apache-2.0 AndroidX support libraries. The
 resolved report is generated with the wrapper command in [Testing](../TESTING.md); the complete
 module set is checked in under `tools/verification/runtime-modules.txt`.
 
-Media3 also requires [Guava](https://github.com/google/guava) **33.3.1-android**
-and `failureaccess` **1.0.2**, Apache-2.0, maintained upstream by Google. They
+Media3 also requires [Guava](https://github.com/google/guava) **33.7.2-android**
+and `failureaccess` **1.0.3**, Apache-2.0, maintained upstream by Google. They
 supply futures and collections used by Media3, including asynchronous controller
 and Inspector APIs. They are JVM libraries without Android manifest components or
 permission contributions; their selected transitive modules appear in the runtime
 report and checksum metadata. Replacing these upstream APIs or excluding required
 classes is not a maintained alternative. The app does not use unrelated Guava
 functionality. These are not Google Play services.
+
+[Decision 0008](0008-security-updates.md) records the Guava security patch and tooling updates.
 
 All modules use the existing official repositories and strict checksum
 verification. The initial checksum provenance limitation in decision 0001 still
