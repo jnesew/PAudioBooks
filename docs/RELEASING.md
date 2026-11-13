@@ -3,8 +3,9 @@
 PAudioBooks follows the version-bump and release-cycle rules used by
 [ComicReader](https://github.com/jnesew/ComicReader/blob/main/docs/RELEASING.md#version-notes-and-source).
 Version values live in `defaultConfig` in
-[app/build.gradle.kts](../app/build.gradle.kts). The current development values
-are `versionName = "0.1.0"` and `versionCode = 1`; they are not a publication record.
+[app/build.gradle.kts](../app/build.gradle.kts). Assigned source values identify
+the current release cycle; they are not a publication record. Published versions
+and changes are recorded in the [changelog](../CHANGELOG.md) and release notes.
 
 ## Choose the bump
 

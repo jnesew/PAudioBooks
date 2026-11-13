@@ -41,7 +41,7 @@ class PlaybackServiceTest {
                     .setArtist("Local author")
                     .setSubtitle("Untrusted subtitle")
                     .setArtworkUri(android.net.Uri.parse("https://invalid.example/cover"))
-                    .setArtworkData(byteArrayOf(1, 2, 3))
+                    .setArtworkData(byteArrayOf(1, 2, 3), null)
                     .build()
                 player.setMediaItem(androidx.media3.common.MediaItem.Builder().setMediaId("test")
                     .setUri("paudio://asset/test").setMediaMetadata(unsafe).build())

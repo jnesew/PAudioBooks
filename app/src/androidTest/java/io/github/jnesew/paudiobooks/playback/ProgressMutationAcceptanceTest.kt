@@ -75,7 +75,7 @@ class ProgressMutationAcceptanceTest {
             assertEquals(0L, app.library.library().progress(b)!!.offsetMs)
             assertFalse(app.library.library().progress(b)!!.finished)
             assertEquals(SessionResult.RESULT_SUCCESS, command(PlaybackService.LOAD_BOOK, Bundle().apply { putString(PlaybackService.BOOK_ID, b) }).resultCode)
-            await("B reloaded at reset position") { main { controller!!.playbackState == Player.STATE_READY && controller!!.currentPosition == 0L } }
+            await("B reloaded at reset position") { main { controller!!.playbackState == Player.STATE_READY && controller.currentPosition == 0L } }
             assertFalse(main { controller!!.playWhenReady })
             assertEquals(SessionResult.RESULT_SUCCESS, command(PlaybackService.SEEK_TRACK_POSITION, Bundle().apply {
                 putString(PlaybackService.BOOK_ID, b); putString(PlaybackService.TRACK_ID, tb); putLong(PlaybackService.TRACK_POSITION_MS, 4000)
@@ -91,7 +91,7 @@ class ProgressMutationAcceptanceTest {
         } finally {
             if (controller != null) {
                 command(PlaybackService.UNLOAD_AND_SAVE)
-                main { controller!!.release() }
+                main { controller.release() }
             }
             app.importer.removeBook(a); app.importer.removeBook(b)
             if (app.library.library().asset(asset) == null) file.delete()

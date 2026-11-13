@@ -62,20 +62,20 @@ class BatchImportAcceptanceTest {
         var count = 0
         fun visit(node: AccessibilityNodeInfo, depth: Int): AccessibilityNodeInfo? {
             if (++count > 700 || depth > 30 || !node.refresh()) return null
-            if (node.isVisibleToUser && predicate(node)) return AccessibilityNodeInfo.obtain(node)
+            if (node.isVisibleToUser && predicate(node)) return node.copyNode()
             for (i in 0 until node.childCount) {
                 val child = node.getChild(i) ?: continue
-                try { visit(child, depth + 1)?.let { return it } } finally { child.recycle() }
+                try { visit(child, depth + 1)?.let { return it } } finally { child.recycleIfPooled() }
             }
             return null
         }
         automation.rootInActiveWindow?.let { root ->
-            try { visit(root,0)?.let { return it } } finally { root.recycle() }
+            try { visit(root,0)?.let { return it } } finally { root.recycleIfPooled() }
         }
         val windows=automation.windows
         try { for (window in windows) if (window.isActive || window.isFocused) {
             val root=window.root ?: continue
-            try { visit(root,0)?.let { return it } } finally { root.recycle() }
+            try { visit(root,0)?.let { return it } } finally { root.recycleIfPooled() }
         } } finally { windows.forEach { it.recycle() } }
         return null
     }
@@ -86,7 +86,7 @@ class BatchImportAcceptanceTest {
             var node=find { it.isEnabled && (it.text?.toString()==text || it.contentDescription?.toString()==text) }
             if (node==null && SystemClock.elapsedRealtime()>=nextScroll) {
                 find { it.isScrollable }?.let { scroll ->
-                    try { scroll.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD) } finally { scroll.recycle() }
+                    try { scroll.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD) } finally { scroll.recycleIfPooled() }
                 }
                 nextScroll=SystemClock.elapsedRealtime()+250
             }
@@ -100,10 +100,10 @@ class BatchImportAcceptanceTest {
                         // explicitly failed; never repeat an accepted toggle/action.
                         return@await current.isEnabled && current.performAction(AccessibilityNodeInfo.ACTION_CLICK)
                     }
-                    node=current.parent; current.recycle()
+                    node=current.parent; current.recycleIfPooled()
                 }
                 false
-            } finally { node?.recycle() }
+            } finally { node?.recycleIfPooled() }
         }
         instrumentation.waitForIdleSync()
     }
@@ -112,24 +112,11 @@ class BatchImportAcceptanceTest {
         await("Native title field") { field = find { it.isEditable }; field != null }
         try { assertTrue(field!!.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, Bundle().apply {
             putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, value)
-        })) } finally { field?.recycle() }
+        })) } finally { field?.recycleIfPooled() }
         instrumentation.waitForIdleSync()
         await("Native title applied before recreation") {
-            find { it.isEditable && it.text?.toString()==value }?.let { it.recycle(); true } ?: false
+            find { it.isEditable && it.text?.toString()==value }?.let { it.recycleIfPooled(); true } ?: false
         }
-    }
-
-    private fun checkboxChecked(text: String): Boolean? {
-        var node = find { it.text?.toString()==text || it.contentDescription?.toString()==text }
-        try {
-            repeat(12) {
-                val current = node ?: return null
-                if (!current.refresh()) return null
-                if (current.isCheckable) return current.isChecked
-                node = current.parent; current.recycle()
-            }
-            return null
-        } finally { node?.recycle() }
     }
 
     private data class Retained(val book: Book, val progress: ReadingState?, val marks: List<Bookmark>)
@@ -231,10 +218,10 @@ class BatchImportAcceptanceTest {
             await("Deferred file ready before metadata action") { main { controller.playbackState==androidx.media3.common.Player.STATE_READY } }
             click("Book information"); click("Audio files"); click(app.getString(R.string.verify_audio))
             await("Identity confirmation remains available in Audio files") {
-                find { it.text?.toString()==app.getString(R.string.verify_audio_explanation) }?.let { it.recycle(); true } ?: false
+                find { it.text?.toString()==app.getString(R.string.verify_audio_explanation) }?.let { it.recycleIfPooled(); true } ?: false
             }
             click("Cancel"); click("Read metadata")
-            fun promptVisible()=find { it.text?.toString()==app.getString(R.string.read_metadata_explanation) }?.let { it.recycle(); true } ?: false
+            fun promptVisible()=find { it.text?.toString()==app.getString(R.string.read_metadata_explanation) }?.let { it.recycleIfPooled(); true } ?: false
             await("Confirmation visible before saving recreation state",::promptVisible)
             scenario.recreate()
             await("Metadata confirmation restored after recreation",::promptVisible)
@@ -242,7 +229,7 @@ class BatchImportAcceptanceTest {
             await("Explicit native metadata completion") { main { !model.sourceWork.value.busy && model.sourceWork.value.complete } }
             assertTrue(main { model.sourceWork.value.metadata }); assertEquals(1,main { model.sourceWork.value.pendingFiles })
             await("Pending count rendered in completion dialog") {
-                find { it.text?.toString()==app.resources.getQuantityString(R.plurals.metadata_still_pending,1,1) }?.let { it.recycle(); true } ?: false
+                find { it.text?.toString()==app.resources.getQuantityString(R.plurals.metadata_still_pending,1,1) }?.let { it.recycleIfPooled(); true } ?: false
             }
             await("Updated metadata playlist ready paused") { main { controller.playbackState==androidx.media3.common.Player.STATE_READY && !controller.playWhenReady } }
             assertEquals(track.id,main { controller.currentMediaItem?.mediaId }); assertTrue(kotlin.math.abs(main { controller.currentPosition }-700)<=200)

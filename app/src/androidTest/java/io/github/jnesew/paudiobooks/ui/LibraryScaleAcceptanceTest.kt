@@ -30,10 +30,10 @@ class LibraryScaleAcceptanceTest {
         fun visit(node: AccessibilityNodeInfo, depth: Int) {
             if (++visited > 500 || depth > 24) return
             val text = node.text?.toString() ?: node.contentDescription?.toString().orEmpty()
-            if (text.contains(label)) found.add(AccessibilityNodeInfo.obtain(node))
+            if (text.contains(label)) found.add(node.copyNode())
             for (i in 0 until node.childCount) {
                 val child = node.getChild(i) ?: continue
-                try { visit(child, depth + 1) } finally { child.recycle() }
+                try { visit(child, depth + 1) } finally { child.recycleIfPooled() }
                 if (visited >= 500) break
             }
         }
@@ -101,7 +101,7 @@ class LibraryScaleAcceptanceTest {
                         try {
                             for (node in nodes) {
                                 if ((node.text?.toString() ?: node.contentDescription?.toString())?.contains("000 Scale 0000") != true) continue
-                                var candidate: AccessibilityNodeInfo? = AccessibilityNodeInfo.obtain(node)
+                                var candidate: AccessibilityNodeInfo? = node.copyNode()
                                 try {
                                     for (depth in 0 until 8) {
                                         val current = candidate ?: break
@@ -111,13 +111,13 @@ class LibraryScaleAcceptanceTest {
                                             break
                                         }
                                         candidate = current.parent
-                                        current.recycle()
+                                        current.recycleIfPooled()
                                     }
-                                } finally { candidate?.recycle() }
+                                } finally { candidate?.recycleIfPooled() }
                                 if (clicked) break
                             }
-                        } finally { nodes.forEach { node -> node.recycle() } }
-                    } finally { root?.recycle() }
+                        } finally { nodes.forEach { node -> node.recycleIfPooled() } }
+                    } finally { root?.recycleIfPooled() }
                     if (!clicked) Thread.sleep(50)
                 }
                 if (!clicked) {
@@ -132,11 +132,11 @@ class LibraryScaleAcceptanceTest {
                                 putBoolean("detailsHeadingVisible", headings.any { it.isVisibleToUser })
                                 putInt("scaleMatches", matches.size)
                             } finally {
-                                headings.forEach { it.recycle() }
-                                matches.forEach { it.recycle() }
+                                headings.forEach { it.recycleIfPooled() }
+                                matches.forEach { it.recycleIfPooled() }
                             }
                         })
-                    } finally { root?.recycle() }
+                    } finally { root?.recycleIfPooled() }
                     instrumentation.uiAutomation.takeScreenshot()?.let { screenshot ->
                         try { java.io.File(app.cacheDir, "scale-failure.png").outputStream().use { output -> screenshot.compress(Bitmap.CompressFormat.PNG, 100, output) } }
                         finally { screenshot.recycle() }
@@ -150,8 +150,8 @@ class LibraryScaleAcceptanceTest {
                     try {
                         val nodes = matchingNodes(root, "Chapters")
                         detailsReached = nodes.any { node -> node.text?.toString() == "Chapters" && node.isVisibleToUser }
-                        nodes.forEach { node -> node.recycle() }
-                    } finally { root?.recycle() }
+                        nodes.forEach { node -> node.recycleIfPooled() }
+                    } finally { root?.recycleIfPooled() }
                     if (!detailsReached) Thread.sleep(25)
                 }
                 assertTrue("Row action must navigate to actual book details", detailsReached)

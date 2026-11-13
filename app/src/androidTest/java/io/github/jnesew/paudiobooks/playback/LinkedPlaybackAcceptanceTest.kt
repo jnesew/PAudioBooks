@@ -62,7 +62,7 @@ class LinkedPlaybackAcceptanceTest {
             await("Linked source did not become ready") { main { controller!!.playbackState==Player.STATE_READY } }
             assertEquals(track.id,main { controller!!.currentMediaItem?.mediaId })
             main { controller!!.play() }
-            await("Linked audio did not play") { main { controller!!.isPlaying && controller!!.currentPosition>100 } }
+            await("Linked audio did not play") { main { controller!!.isPlaying && controller.currentPosition>100 } }
             assertEquals(SessionResult.RESULT_SUCCESS,command(PlaybackService.SET_SPEED,Bundle().apply { putFloat(PlaybackService.SPEED,1.25f) }).resultCode)
             assertEquals(SessionResult.RESULT_SUCCESS,command(PlaybackService.SEEK_TRACK_POSITION,Bundle().apply {
                 putString(PlaybackService.BOOK_ID,bookId); putString(PlaybackService.TRACK_ID,track.id); putLong(PlaybackService.TRACK_POSITION_MS,4000)
@@ -77,10 +77,10 @@ class LinkedPlaybackAcceptanceTest {
             assertEquals(before,media.listFiles().orEmpty().map { it.name }.toSet())
             assertEquals(SessionResult.RESULT_SUCCESS,command(PlaybackService.UNLOAD_AND_SAVE).resultCode)
             assertEquals(SessionResult.RESULT_SUCCESS,command(PlaybackService.LOAD_BOOK,Bundle().apply { putString(PlaybackService.BOOK_ID,bookId) }).resultCode)
-            await("Linked cold load failed") { main { controller!!.playbackState==Player.STATE_READY && !controller!!.playWhenReady } }
+            await("Linked cold load failed") { main { controller!!.playbackState==Player.STATE_READY && !controller.playWhenReady } }
             assertTrue(kotlin.math.abs(main { controller!!.currentPosition }-saved.offsetMs)<=200)
         } finally {
-            if (controller!=null) { runCatching { command(PlaybackService.UNLOAD_AND_SAVE) }; main { controller!!.release() } }
+            if (controller!=null) { runCatching { command(PlaybackService.UNLOAD_AND_SAVE) }; main { controller.release() } }
             app.importer.removeBook(bookId)
             app.importer.cancel(preview.jobId)
             assertTrue(BoundedDocumentAccess.awaitIdle())
@@ -114,10 +114,10 @@ class LinkedPlaybackAcceptanceTest {
             assertEquals(1,app.linker.reauthorize(bookId,root))
             assertFalse(app.library.library().asset(track.assetId)!!.identityVerified)
             assertEquals(SessionResult.RESULT_SUCCESS,command(PlaybackService.LOAD_BOOK,Bundle().apply { putString(PlaybackService.BOOK_ID,bookId) }).resultCode)
-            await("Same-tree access renewal did not recover paused playback") { main { controller!!.playbackState==Player.STATE_READY && !controller!!.playWhenReady } }
+            await("Same-tree access renewal did not recover paused playback") { main { controller!!.playbackState==Player.STATE_READY && !controller.playWhenReady } }
             assertEquals("Keep revoked link note",app.library.library().bookmarks(bookId).single().note)
         } finally {
-            if (controller!=null) { runCatching { command(PlaybackService.UNLOAD_AND_SAVE) }; main { controller!!.release() } }
+            if (controller!=null) { runCatching { command(PlaybackService.UNLOAD_AND_SAVE) }; main { controller.release() } }
             app.importer.removeBook(bookId); app.importer.cancel(preview.jobId)
             assertTrue(BoundedDocumentAccess.awaitIdle())
         }

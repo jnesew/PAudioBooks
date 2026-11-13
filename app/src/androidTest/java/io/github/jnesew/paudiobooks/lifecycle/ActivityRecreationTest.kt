@@ -67,7 +67,7 @@ class ActivityRecreationTest {
             }
             if (unloadFuture != null) {
                 // Await completion off main thread before release/deletion; do not swallow cleanup errors
-                val result = unloadFuture!!.get(10, TimeUnit.SECONDS)
+                val result = unloadFuture.get(10, TimeUnit.SECONDS)
                 assertEquals("UNLOAD_AND_SAVE in teardown must succeed", SessionResult.RESULT_SUCCESS, result.resultCode)
             }
             instrumentation.runOnMainSync {

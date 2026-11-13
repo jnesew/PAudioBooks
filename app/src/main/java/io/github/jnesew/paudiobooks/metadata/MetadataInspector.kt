@@ -106,7 +106,7 @@ class MetadataInspector(context: Context) {
                 remote = Messenger(binder)
                 try {
                     binder.linkToDeath({ death.complete(Unit) }, 0)
-                    remote?.send(Message.obtain(null, REQUEST).apply {
+                    remote.send(Message.obtain(null, REQUEST).apply {
                         replyTo = reply
                         data.putParcelable(FD, fd)
                         data.putInt(MODE, mode)
@@ -120,13 +120,13 @@ class MetadataInspector(context: Context) {
             override fun onBindingDied(name: ComponentName) = onServiceDisconnected(name)
             override fun onNullBinding(name: ComponentName) = onServiceDisconnected(name)
         }
-        bound = try { app.bindService(Intent(app, InspectionService::class.java), connection!!, Context.BIND_AUTO_CREATE) }
+        bound = try { app.bindService(Intent(app, InspectionService::class.java), connection, Context.BIND_AUTO_CREATE) }
             catch (_: SecurityException) { false }
         if (!bound) continuation.resumeWithException(InspectionException(InspectionException.Reason.UNAVAILABLE))
             }
         } finally {
             if (remote != null) {
-                try { remote?.send(Message.obtain(null, CANCEL)) } catch (_: Exception) { death.complete(Unit) }
+                try { remote.send(Message.obtain(null, CANCEL)) } catch (_: Exception) { death.complete(Unit) }
                 val stopped = withContext(NonCancellable) { withTimeoutOrNull(2_000) { death.await(); true } } ?: false
                 if (bound) app.unbindService(connection!!)
                 if (!stopped) throw InspectionException(InspectionException.Reason.PROCESS_DIED)

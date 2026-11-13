@@ -8,7 +8,8 @@ books without an account, internet connection, or Google Play services.
 [Releases](https://github.com/jnesew/PAudioBooks/releases) ·
 [Usage guide](docs/USAGE.md) · [Build from source](docs/BUILDING.md)
 
-PAudioBooks is in development. Obtainium needs a published, signed APK release;
+The [initial release notes](docs/RELEASE-NOTES-0.1.0.md) cover compatibility and
+known limitations. Obtainium needs a published, signed APK release;
 the badge adds this repository as its source. Obtainium handles downloads and
 updates separately from the offline player.
 
@@ -32,5 +33,5 @@ Books, artwork, and listening records stay on your device. There are no ads,
 analytics, streaming, or remote metadata lookups. Progress exports are unencrypted
 and can contain personal notes; keep them somewhere private.
 
-[MIT license](LICENSE) · [Forking guide](docs/FORKING.md) ·
+[MIT license](LICENSE) · [Security reporting](SECURITY.md) · [Forking guide](docs/FORKING.md) ·
 [Developer documentation](docs/README.md)

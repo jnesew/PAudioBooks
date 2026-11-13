@@ -49,22 +49,22 @@ class EditorDraftAcceptanceTest {
             // A loading screen initially disables bookmark/chapter nodes. Read
             // their current server state rather than a cached disabled copy.
             if (!node.refresh()) return null
-            if (node.isVisibleToUser && predicate(node)) return AccessibilityNodeInfo.obtain(node)
+            if (node.isVisibleToUser && predicate(node)) return node.copyNode()
             for (i in 0 until node.childCount) {
                 val child = node.getChild(i) ?: continue
-                try { visit(child, depth + 1)?.let { return it } } finally { child.recycle() }
+                try { visit(child, depth + 1)?.let { return it } } finally { child.recycleIfPooled() }
             }
             return null
         }
         // API26 can retain a dismissed window as a non-null cached root.
         automation.rootInActiveWindow?.let { root ->
-            try { visit(root, 0)?.let { return it } } finally { root.recycle() }
+            try { visit(root, 0)?.let { return it } } finally { root.recycleIfPooled() }
         }
         val windows = automation.windows
         try {
             windows.forEach { window ->
                 if (window.isActive || window.isFocused) window.root?.let { root ->
-                    try { visit(root, 0)?.let { return it } } finally { root.recycle() }
+                    try { visit(root, 0)?.let { return it } } finally { root.recycleIfPooled() }
                 }
             }
         } finally { windows.forEach { it.recycle() } }
@@ -88,7 +88,7 @@ class EditorDraftAcceptanceTest {
         }
         val root = instrumentation.uiAutomation.rootInActiveWindow
         val identity = "package=${root?.packageName} class=${root?.className} children=${root?.childCount}"
-        root?.recycle()
+        root?.recycleIfPooled()
         instrumentation.uiAutomation.takeScreenshot()?.let { bitmap ->
             try {
                 File(instrumentation.targetContext.cacheDir, "editor-failure.png").outputStream().use {
@@ -114,18 +114,18 @@ class EditorDraftAcceptanceTest {
                         if (current.performAction(AccessibilityNodeInfo.ACTION_CLICK)) return
                     }
                     node = current.parent
-                    current.recycle()
+                    current.recycleIfPooled()
                 }
-            } finally { node?.recycle() }
+            } finally { node?.recycleIfPooled() }
             // A fading dialog heading can share the underlying action's label.
             // Wait for a real clickable ancestor instead of treating it as a button.
             if (text != "Close player" && text != "Search books") {
                 val scroll = find { it.isScrollable }
-                try { scroll?.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD) } finally { scroll?.recycle() }
+                try { scroll?.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD) } finally { scroll?.recycleIfPooled() }
             }
             Thread.sleep(50)
         }
-        awaitNode { label(text)(it) && it.isEnabled && it.isClickable }.recycle()
+        awaitNode { label(text)(it) && it.isEnabled && it.isClickable }.recycleIfPooled()
         error("No enabled native action for $text")
     }
 
@@ -149,7 +149,7 @@ class EditorDraftAcceptanceTest {
             assertTrue(node.performAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_SET_PROGRESS.id, Bundle().apply {
                 putFloat(AccessibilityNodeInfo.ACTION_ARGUMENT_PROGRESS_VALUE, speed)
             }))
-        } finally { node.recycle() }
+        } finally { node.recycleIfPooled() }
     }
 
     private fun assertDisabledAction(text: String) {
@@ -157,18 +157,18 @@ class EditorDraftAcceptanceTest {
         // Wait for the actual disabled control, not just its already-visible label.
         awaitNode { candidate ->
             if (!label(text)(candidate)) return@awaitNode false
-            var node: AccessibilityNodeInfo? = AccessibilityNodeInfo.obtain(candidate)
+            var node: AccessibilityNodeInfo? = candidate.copyNode()
             try {
                 repeat(10) {
                     val current = node ?: return@awaitNode false
                     if (!current.refresh()) return@awaitNode false
                     if (!current.isEnabled) return@awaitNode true
                     node = current.parent
-                    current.recycle()
+                    current.recycleIfPooled()
                 }
                 false
-            } finally { node?.recycle() }
-        }.recycle()
+            } finally { node?.recycleIfPooled() }
+        }.recycleIfPooled()
     }
 
     private fun setText(text: String) {
@@ -178,12 +178,12 @@ class EditorDraftAcceptanceTest {
             assertTrue(node.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, Bundle().apply {
                 putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, text)
             }))
-        } finally { node.recycle() }
+        } finally { node.recycleIfPooled() }
     }
 
     private fun assertDraft(text: String) {
         val node = awaitNode { it.isEditable && it.text?.toString() == text }
-        node.recycle()
+        node.recycleIfPooled()
     }
 
     private fun outsideTap() {
@@ -197,7 +197,7 @@ class EditorDraftAcceptanceTest {
         val handle = find(label("Drag handle"))
         if (handle != null) {
             val bounds = Rect()
-            try { handle.getBoundsInScreen(bounds) } finally { handle.recycle() }
+            try { handle.getBoundsInScreen(bounds) } finally { handle.recycleIfPooled() }
             if (bounds.top < 88 * metrics.density) {
                 // A large-font sheet can occupy the whole app window, with no
                 // exposed scrim to tap. Its equivalent Back exit remains available.
@@ -213,10 +213,10 @@ class EditorDraftAcceptanceTest {
             val title = find { it.text?.toString() in setOf("Add bookmark", "Edit note", "Sleep timer", "Book information") }
             if (title != null) {
                 val bounds = Rect()
-                try { title.getBoundsInScreen(bounds) } finally { title.recycle() }
+                try { title.getBoundsInScreen(bounds) } finally { title.recycleIfPooled() }
                 val rootBounds = Rect()
                 val root = automation.rootInActiveWindow
-                try { root?.getBoundsInScreen(rootBounds) } finally { root?.recycle() }
+                try { root?.getBoundsInScreen(rootBounds) } finally { root?.recycleIfPooled() }
                 // RTL titles align right. Use the smaller title-to-window inset so
                 // the tap stays outside the dialog surface in either direction.
                 val inset = minOf(bounds.left - rootBounds.left, rootBounds.right - bounds.right)
@@ -238,16 +238,16 @@ class EditorDraftAcceptanceTest {
     private fun bookmarkActions() {
         val node = awaitNode { it.contentDescription?.toString()?.let { label -> label.startsWith("Bookmark actions,") && label.endsWith("0:01") } == true }
         val label = node.contentDescription.toString()
-        node.recycle()
+        node.recycleIfPooled()
         click(label)
     }
 
     private fun reveal(text: String, direction: Int) {
         repeat(16) {
             val visible = find(label(text))
-            if (visible != null) { visible.recycle(); return }
+            if (visible != null) { visible.recycleIfPooled(); return }
             val scroll = find { it.isScrollable }
-            try { scroll?.performAction(direction) } finally { scroll?.recycle() }
+            try { scroll?.performAction(direction) } finally { scroll?.recycleIfPooled() }
             instrumentation.waitForIdleSync()
             Thread.sleep(100)
         }
@@ -325,11 +325,11 @@ class EditorDraftAcceptanceTest {
                 // Return to its real header before activating the selected book.
                 repeat(2) {
                     val list = find { it.isScrollable }
-                    try { list?.performAction(AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD) } finally { list?.recycle() }
+                    try { list?.performAction(AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD) } finally { list?.recycleIfPooled() }
                     Thread.sleep(100)
                 }
                 val resume = find(label("Resume"))
-                if (resume != null) { resume.recycle(); click("Resume") } else {
+                if (resume != null) { resume.recycleIfPooled(); click("Resume") } else {
                     reveal("Play", AccessibilityNodeInfo.ACTION_SCROLL_FORWARD)
                     click("Play")
                 }
@@ -338,7 +338,7 @@ class EditorDraftAcceptanceTest {
                 // Player content is scrollable; accessibility actions reach the control
                 // without relying on a clipped parent's physical center coordinate.
                 val scroll = find { it.isScrollable }
-                try { scroll?.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD) } finally { scroll?.recycle() }
+                try { scroll?.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD) } finally { scroll?.recycleIfPooled() }
                 reveal("Add bookmark", AccessibilityNodeInfo.ACTION_SCROLL_FORWARD)
                 click("Add bookmark")
                 setText("New bookmark draft")
@@ -382,7 +382,7 @@ class EditorDraftAcceptanceTest {
                 click("Cancel")
                 click("Speed")
                 click("Increase speed by 0.05×")
-                awaitNode { it.text?.toString() == "1.05×" }.recycle()
+                awaitNode { it.text?.toString() == "1.05×" }.recycleIfPooled()
                 suspend fun awaitSpeed(value: Float) {
                     val deadline = SystemClock.elapsedRealtime() + 5000
                     while (kotlin.math.abs((app.library.library().progress(book)?.speed ?: 0f) - value) > 0.001f) {
@@ -408,14 +408,14 @@ class EditorDraftAcceptanceTest {
                     check(SystemClock.elapsedRealtime() < seekDeadline)
                     Thread.sleep(25)
                 }
-                awaitNode { label("Play")(it) && it.isEnabled }.recycle()
+                awaitNode { label("Play")(it) && it.isEnabled }.recycleIfPooled()
                 click("Speed")
-                awaitNode { it.text?.toString() == "1.05×" }.recycle()
+                awaitNode { it.text?.toString() == "1.05×" }.recycleIfPooled()
                 outsideTap()
                 reveal("Sleep timer", AccessibilityNodeInfo.ACTION_SCROLL_FORWARD)
                 click("Sleep timer")
                 reveal("Minutes", AccessibilityNodeInfo.ACTION_SCROLL_FORWARD)
-                awaitNode { it.isEditable }.recycle()
+                awaitNode { it.isEditable }.recycleIfPooled()
                 outsideTap()
                 click("Sleep timer")
                 setText("17")

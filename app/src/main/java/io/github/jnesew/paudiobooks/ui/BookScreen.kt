@@ -215,7 +215,7 @@ internal fun BookPage(
                 OutlinedButton(onClick = { repair = true }, Modifier.fillMaxWidth()) { Text(stringResource(if (linked) R.string.reconnect_audio else R.string.repair_audio)) }
             } }
             item {
-                val chapterIndex=details.chapters.indexOfLast { it.trackId==details.progress?.trackId && it.startMs<=(details.progress?.offsetMs ?: 0L) }
+                val chapterIndex=details.chapters.indexOfLast { it.trackId==details.progress?.trackId && it.startMs<=details.progress.offsetMs }
                 val label=details.chapters.getOrNull(chapterIndex)?.let { it.title ?: stringResource(R.string.chapter_number,chapterIndex+1) }
                 OverviewRow(stringResource(R.string.chapters), stringResource(R.string.count_value, details.chapters.size),label) { chaptersOpen = true }
             }

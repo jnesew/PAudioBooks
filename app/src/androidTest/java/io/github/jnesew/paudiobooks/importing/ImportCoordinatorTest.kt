@@ -594,7 +594,7 @@ class ImportCoordinatorTest {
             assertEquals(200000L, preview.files[1].copy.sizeBytes)
 
             // 3. Companion cover staging, inspection and sanitization via production helper
-            val sanitizedThumb = coordinator.stageAndInspectCover(tree.companionCover!!.uri) { stagedCoverFile ->
+            val sanitizedThumb = coordinator.stageAndInspectCover(tree.companionCover.uri) { stagedCoverFile ->
                 assertTrue("Staged companion cover must exist during inspection", stagedCoverFile.isFile)
                 val rawBytes = stagedCoverFile.readBytes()
                 val bmp = android.graphics.BitmapFactory.decodeByteArray(rawBytes, 0, rawBytes.size)
@@ -658,7 +658,7 @@ class ImportCoordinatorTest {
             assertNotNull("Original track 2 must remain readable", stream2)
             assertEquals(300000, stream2!!.use { it.readBytes() }.size)
 
-            val streamCover = context.contentResolver.openInputStream(tree.companionCover!!.uri)
+            val streamCover = context.contentResolver.openInputStream(tree.companionCover.uri)
             assertNotNull("Original cover must remain readable", streamCover)
             assertTrue(streamCover!!.use { it.readBytes() }.isNotEmpty())
 
@@ -684,7 +684,7 @@ class ImportCoordinatorTest {
             assertNotNull("Original track 2 must survive book removal", postRemove2)
             assertEquals(300000, postRemove2!!.use { it.readBytes() }.size)
 
-            val postRemoveCover = context.contentResolver.openInputStream(tree.companionCover!!.uri)
+            val postRemoveCover = context.contentResolver.openInputStream(tree.companionCover.uri)
             assertNotNull("Original cover must survive book removal", postRemoveCover)
             assertTrue(postRemoveCover!!.use { it.readBytes() }.isNotEmpty())
 
@@ -743,7 +743,7 @@ class ImportCoordinatorTest {
             assertTrue("Deferred task must be cancelled", deferred.isCancelled)
 
             // Assert that the staged cover file was removed and no orphaned jobs remain
-            assertFalse("Staged cover file must be cleaned up despite cancellation", inspectedFile!!.exists())
+            assertFalse("Staged cover file must be cleaned up despite cancellation", inspectedFile.exists())
             assertTrue("No orphaned import jobs should remain in database", coordinator.interruptedJobs().isEmpty())
         } finally { db.close() }
     }
@@ -831,7 +831,7 @@ class ImportCoordinatorTest {
             val firstAfter = repo.playableBook(firstBookId)!!
             assertEquals("Book 1", firstAfter.title)
             assertEquals(2500L, firstAfter.progress!!.offsetMs)
-            assertEquals(1.25f, firstAfter.progress!!.speed)
+            assertEquals(1.25f, firstAfter.progress.speed)
 
             // Second book resolves to the same shared asset
             val secondPlayable = repo.playableBook(secondBookId)!!
@@ -1321,7 +1321,7 @@ class ImportCoordinatorTest {
             assertFalse(remainingJobs.any { it.id == preview.jobId })
 
             // 4. Committed book and physical media file remain completely intact
-            val bookAfter = repo.playableBook(committedBookId!!)
+            val bookAfter = repo.playableBook(committedBookId)
             assertNotNull(bookAfter)
             val assetAfter = db.library().asset(bookAfter!!.tracks.single().assetId)
             assertNotNull(assetAfter)

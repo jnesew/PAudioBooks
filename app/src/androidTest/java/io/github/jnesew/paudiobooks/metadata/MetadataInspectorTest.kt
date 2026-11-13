@@ -54,7 +54,7 @@ class MetadataInspectorTest {
     @Test fun unexposedNestedMdtaKeepsUnknownFieldsInsteadOfInventingCredits() = runBlocking {
         val result = MetadataInspector(context).inspect(fixture("metadata-mdta.m4b"))
         assertEquals(BookMetadata(),result.bookMetadata)
-        assertTrue(result.durationMs != null && result.durationMs!! > 11000)
+        assertTrue(result.durationMs != null && result.durationMs > 11000)
     }
 
     @Test fun explicitContributorTagsSurviveTheIsolatedDescriptorProtocol() = runBlocking {
@@ -75,7 +75,7 @@ class MetadataInspectorTest {
             val result = inspector.inspect(fixture(name))
             assertEquals(name, listOf(0L, 4000L, 8000L), result.chapters.map { it.startMs })
             assertEquals(name, listOf("First", "Second", "Third"), result.chapters.map { it.title })
-            assertTrue(name, result.durationMs != null && result.durationMs!! in 11_900L..12_100L)
+            assertTrue(name, result.durationMs != null && result.durationMs in 11_900L..12_100L)
         }
     }
 
@@ -84,7 +84,7 @@ class MetadataInspectorTest {
         for (name in listOf("no-chapters.wav", "no-chapters.flac", "no-chapters.ogg", "no-chapters-opus.ogg", "no-chapters.m4a")) {
             val result = inspector.inspect(fixture(name))
             assertTrue(name, result.chapters.isEmpty())
-            assertTrue(name, result.durationMs != null && result.durationMs!! in 11_900L..12_100L)
+            assertTrue(name, result.durationMs != null && result.durationMs in 11_900L..12_100L)
         }
     }
 

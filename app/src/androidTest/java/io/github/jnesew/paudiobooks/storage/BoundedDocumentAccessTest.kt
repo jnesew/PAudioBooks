@@ -83,8 +83,8 @@ class BoundedDocumentAccessTest {
             catch (e: DocumentSourceException) { assertEquals(DocumentSourceException.Reason.TIMEOUT,e.reason) }
         }
         val limit = SystemClock.elapsedRealtime()+3000
-        while (call("state")?.getBoolean("entered") != true && SystemClock.elapsedRealtime()<limit) delay(10)
-        assertTrue(call("state")!!.getBoolean("entered"))
+        while (call("state").getBoolean("entered") != true && SystemClock.elapsedRealtime()<limit) delay(10)
+        assertTrue(call("state").getBoolean("entered"))
         // A main-looper barrier remains responsive while the actual remote open is blocked.
         InstrumentationRegistry.getInstrumentation().runOnMainSync { assertTrue(android.os.Looper.myLooper()==android.os.Looper.getMainLooper()) }
         task.await(); assertTrue(SystemClock.elapsedRealtime()-started < 2500)

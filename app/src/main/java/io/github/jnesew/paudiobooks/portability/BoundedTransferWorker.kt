@@ -90,7 +90,7 @@ internal class BoundedTransferWorker(private val timeoutMs: Long = 30_000) {
                             release()
                             if (continuation.isActive) {
                                 if (failure == null) continuation.resume(requireNotNull(value))
-                                else continuation.resumeWithException(if (failure is Error) failure!!
+                                else continuation.resumeWithException(if (failure is Error) failure
                                     else TransferIoException(TransferIoException.Reason.UNAVAILABLE))
                             }
                         }

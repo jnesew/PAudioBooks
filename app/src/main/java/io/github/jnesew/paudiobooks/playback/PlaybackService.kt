@@ -137,8 +137,8 @@ class PlaybackService : MediaSessionService() {
             .setMediaSourceFactory(DefaultMediaSourceFactory(androidx.media3.datasource.DataSource.Factory {
                 val app = application as AudiobookApplication
                 ApprovedAssetDataSource({ approvedAssets }, app.documentAccess, app.sourceGrants,
-                    unavailable={ assetId,reason -> app.cleanupScope.launch { app.library.sources().setAvailability(assetId,reason.name) }; Unit },
-                    available={ assetId -> app.cleanupScope.launch { app.library.sources().setAvailability(assetId,"AVAILABLE") }; Unit })
+                    unavailable={ assetId,reason -> app.cleanupScope.launch { app.library.sources().setAvailability(assetId,reason.name) } },
+                    available={ assetId -> app.cleanupScope.launch { app.library.sources().setAvailability(assetId,"AVAILABLE") } })
             }))
             .setAudioAttributes(AudioAttributes.Builder().setUsage(C.USAGE_MEDIA).setContentType(C.AUDIO_CONTENT_TYPE_SPEECH).build(), true)
             .setHandleAudioBecomingNoisy(true)
@@ -295,8 +295,7 @@ class PlaybackService : MediaSessionService() {
                 .add(Player.COMMAND_SEEK_IN_CURRENT_MEDIA_ITEM).add(Player.COMMAND_SEEK_BACK)
                 .add(Player.COMMAND_SEEK_FORWARD).add(Player.COMMAND_SEEK_TO_PREVIOUS_MEDIA_ITEM)
                 .add(Player.COMMAND_SEEK_TO_NEXT_MEDIA_ITEM).add(Player.COMMAND_GET_CURRENT_MEDIA_ITEM)
-                .add(Player.COMMAND_GET_TIMELINE).add(Player.COMMAND_GET_METADATA)
-                .add(Player.COMMAND_GET_MEDIA_ITEMS_METADATA).build()
+                .add(Player.COMMAND_GET_TIMELINE).add(Player.COMMAND_GET_METADATA).build()
             val sessionCommands = SessionCommands.Builder()
             if (own) {
                 sessionCommands.add(SessionCommand(LOAD_BOOK, Bundle.EMPTY))
@@ -313,7 +312,7 @@ class PlaybackService : MediaSessionService() {
                 sessionCommands.add(SessionCommand(SET_SLEEP_TIMER, Bundle.EMPTY))
                 sessionCommands.add(SessionCommand(CANCEL_SLEEP_TIMER, Bundle.EMPTY))
             }
-            return MediaSession.ConnectionResult.AcceptedResultBuilder(session)
+            return MediaSession.ConnectionResult.AcceptedResultBuilder()
                 .setAvailablePlayerCommands(commands)
                 .setAvailableSessionCommands(sessionCommands.build()).build()
         }
@@ -555,7 +554,7 @@ class PlaybackService : MediaSessionService() {
                         MediaItem.Builder().setMediaId(track.id).setUri("paudio://asset/${track.assetId}")
                             // Non-null placeholders override artwork and artist supplied by embedded tags.
                             .setMediaMetadata(MediaMetadata.Builder().setTitle(loaded.title.take(512)).setArtist(loaded.author?.take(512) ?: "")
-                                .setArtworkUri(android.net.Uri.EMPTY).setArtworkData(byteArrayOf())
+                                .setArtworkUri(android.net.Uri.EMPTY).setArtworkData(byteArrayOf(), null)
                                 .setExtras(Bundle().apply { putString(BOOK_ID, loaded.id) }).build()).build()
                     }
                     val saved = loaded.progress

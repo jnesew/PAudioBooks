@@ -153,7 +153,7 @@ internal fun PlayerScreen(details: BookDetails?, playback: PlaybackConnection, d
                         state = stringResource(if (state.sleepActive) R.string.sleep_active else R.string.sleep_inactive), active = state.sleepActive)
                     val speedLabel = stringResource(R.string.speed)
                     val speedValue = stringResource(R.string.speed_value, state.speed)
-                    TooltipBox(positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+                    TooltipBox(positionProvider = TooltipDefaults.rememberTooltipPositionProvider(TooltipAnchorPosition.Above),
                         tooltip = { PlainTooltip { Text(stringResource(R.string.action_state, speedLabel, speedValue)) } }, state = rememberTooltipState()) {
                         TextButton(onClick = { speedOpen = true }, enabled = controller != null && state.trackId != null,
                             modifier = Modifier.heightIn(min = 48.dp).semantics { contentDescription = speedLabel; stateDescription = speedValue }) { Text(speedValue) }

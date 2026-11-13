@@ -24,7 +24,7 @@ internal fun IconAction(@DrawableRes icon: Int, label: String, onClick: () -> Un
     enabled: Boolean = true, state: String? = null, active: Boolean = false,
     prominent: Boolean = false, seconds: Int? = null) {
     val description = state?.let { stringResource(R.string.action_state, label, it) } ?: label
-    TooltipBox(positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+    TooltipBox(positionProvider = TooltipDefaults.rememberTooltipPositionProvider(TooltipAnchorPosition.Above),
         tooltip = { PlainTooltip { Text(description) } }, state = rememberTooltipState()) {
         IconButton(onClick, enabled = enabled,
             modifier = Modifier.size(if (prominent) 64.dp else 48.dp).semantics {

@@ -81,7 +81,7 @@ class BookRemovalJourneyTest {
                 }
                 if (unloadFuture != null) {
                     val result = try {
-                        unloadFuture!!.get(10, TimeUnit.SECONDS)
+                        unloadFuture.get(10, TimeUnit.SECONDS)
                     } catch (e: Exception) {
                         null
                     }

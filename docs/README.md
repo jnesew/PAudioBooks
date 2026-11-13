@@ -3,6 +3,9 @@
 ## Using the app
 
 - [Usage guide](USAGE.md): adding books, listening tools, library management, and recovery.
+- [0.1.0 release notes](RELEASE-NOTES-0.1.0.md): initial features, installation and limitations.
+- [Changelog](../CHANGELOG.md): changes by release cycle.
+- [Security reporting](../SECURITY.md): private vulnerability reports and safe diagnostics.
 
 ## Developer guides
 

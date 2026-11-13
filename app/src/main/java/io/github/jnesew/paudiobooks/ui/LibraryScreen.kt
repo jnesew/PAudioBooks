@@ -89,7 +89,7 @@ internal fun LibraryPage(books: List<BookSummary>, modifier: Modifier, activeBoo
                         Text(stringResource(R.string.continue_listening), color = MaterialTheme.colorScheme.primary)
                         Text(recent.book.displayTitle, style = MaterialTheme.typography.titleLarge)
                         recent.book.displayAuthor?.let { Text(it) }
-                        val chapter = recentDetails?.chapters?.lastOrNull { it.trackId == recent.progress?.trackId && it.startMs <= (recent.progress?.offsetMs ?: 0L) && (it.endMs == null || (recent.progress?.offsetMs ?: 0L) < it.endMs) }
+                        val chapter = recentDetails?.chapters?.lastOrNull { it.trackId == recent.progress?.trackId && it.startMs <= recent.progress.offsetMs && (it.endMs == null || recent.progress.offsetMs < it.endMs) }
                         chapter?.title?.let { Text(it, style = MaterialTheme.typography.bodySmall) }
                         Spacer(Modifier.height(8.dp))
                         LibraryProgress(recent)

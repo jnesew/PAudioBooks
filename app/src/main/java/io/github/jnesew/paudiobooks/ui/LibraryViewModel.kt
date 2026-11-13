@@ -121,6 +121,7 @@ class LibraryViewModel(application: Application) : AndroidViewModel(application)
     private val reload = MutableStateFlow(0)
     private val _error = MutableStateFlow<Int?>(null)
     val error = _error.asStateFlow()
+    @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
     val summaries = reload.flatMapLatest { app.repository.summaries.catch { _error.value = R.string.library_read_error } }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
     private val _import = MutableStateFlow(ImportUi())
@@ -361,7 +362,7 @@ class LibraryViewModel(application: Application) : AndroidViewModel(application)
                         TrackOrderHint(it.selected.name, it.discNumber, it.trackNumber, it.selected.subfolder, it.selected.orderKey)
                     }).map { preview.tracks[it] }
                     val title = source.reviewedTitle ?: suggestedBookTitle(ordered.map { it.metadata.bookMetadata }, ordered.map { it.metadata.title }, source.title)
-                    val entryText = ordered.sumOf { it.metadata.bookMetadata.textLength().toLong() + it.metadata.chapters.sumOf { c -> c.title?.length?.toLong() ?: 0L } }
+                    val entryText = ordered.sumOf { it.metadata.bookMetadata.textLength() + it.metadata.chapters.sumOf { c -> c.title?.length?.toLong() ?: 0L } }
                     val entryChapters = ordered.sumOf { it.metadata.chapters.size.toLong() }
                     if (retainedText + entryText > 8L * 1024 * 1024 || retainedChapters + entryChapters > 100_000) throw io.github.jnesew.paudiobooks.importing.ImportMetadataLimitException()
                     retainedText += entryText

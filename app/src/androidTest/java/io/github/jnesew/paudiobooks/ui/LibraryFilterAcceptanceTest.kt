@@ -37,22 +37,22 @@ class LibraryFilterAcceptanceTest {
         var count = 0
         fun visit(node: AccessibilityNodeInfo, depth: Int): AccessibilityNodeInfo? {
             if (++count > 700 || depth > 30 || !node.refresh()) return null
-            if (node.isVisibleToUser && predicate(node)) return AccessibilityNodeInfo.obtain(node)
+            if (node.isVisibleToUser && predicate(node)) return node.copyNode()
             for (i in 0 until node.childCount) {
                 val child = node.getChild(i) ?: continue
-                try { visit(child,depth+1)?.let { return it } } finally { child.recycle() }
+                try { visit(child,depth+1)?.let { return it } } finally { child.recycleIfPooled() }
             }
             return null
         }
         val windows = automation.windows
         try { for (window in windows) if (window.isActive || window.isFocused) {
             val root = window.root ?: continue
-            try { visit(root,0)?.let { return it } } finally { root.recycle() }
+            try { visit(root,0)?.let { return it } } finally { root.recycleIfPooled() }
         } } finally { windows.forEach { it.recycle() } }
         return null
     }
     private fun has(text: String): Boolean = find { it.text?.toString()?.contains(text) == true || it.contentDescription?.toString() == text }
-        ?.let { it.recycle(); true } ?: false
+        ?.let { it.recycleIfPooled(); true } ?: false
     private fun await(message: String, condition: () -> Boolean) {
         val end = SystemClock.elapsedRealtime()+8000
         while (SystemClock.elapsedRealtime()<end) { if (condition()) return; Thread.sleep(50) }
@@ -60,7 +60,7 @@ class LibraryFilterAcceptanceTest {
     }
     private fun scroll(direction: Int): Boolean {
         val node = find { it.isScrollable } ?: return false
-        return try { node.performAction(direction) } finally { node.recycle() }
+        return try { node.performAction(direction) } finally { node.recycleIfPooled() }
     }
     private fun reveal(text: String) {
         val end=SystemClock.elapsedRealtime()+15000
@@ -72,12 +72,12 @@ class LibraryFilterAcceptanceTest {
         error("Cannot reveal synthetic test control: $text")
     }
     private fun hasEnabledAction(source: AccessibilityNodeInfo): Boolean {
-        var node: AccessibilityNodeInfo?=AccessibilityNodeInfo.obtain(source)
+        var node: AccessibilityNodeInfo?=source.copyNode()
         try { repeat(10) {
             val current=node ?: return false
             if (current.isClickable && current.isEnabled) return true
-            node=current.parent; current.recycle()
-        } } finally { node?.recycle() }
+            node=current.parent; current.recycleIfPooled()
+        } } finally { node?.recycleIfPooled() }
         return false
     }
     private fun click(text: String) {
@@ -88,8 +88,8 @@ class LibraryFilterAcceptanceTest {
             try { repeat(10) {
                 val current=node ?: return@repeat
                 if (current.isClickable && current.isEnabled && current.performAction(AccessibilityNodeInfo.ACTION_CLICK)) return
-                node=current.parent; current.recycle()
-            } } finally { node?.recycle() }
+                node=current.parent; current.recycleIfPooled()
+            } } finally { node?.recycleIfPooled() }
             Thread.sleep(50)
         }
         capture("failure")
@@ -120,7 +120,7 @@ class LibraryFilterAcceptanceTest {
         val node=requireNotNull(found)
         try { assertTrue(node.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, android.os.Bundle().apply {
             putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE,text)
-        })) } finally { node.recycle() }
+        })) } finally { node.recycleIfPooled() }
         instrumentation.waitForIdleSync()
     }
     private fun openFilters() {
@@ -139,7 +139,7 @@ class LibraryFilterAcceptanceTest {
             found!=null
         }
         val bounds=Rect()
-        try { requireNotNull(found).getBoundsInScreen(bounds) } finally { found?.recycle() }
+        try { requireNotNull(found).getBoundsInScreen(bounds) } finally { found?.recycleIfPooled() }
         // Exercise the same touch target for active and inactive tabs. Android omits
         // ACTION_CLICK for the selected tab; coordinates come from its native tree.
         val now=SystemClock.uptimeMillis()
@@ -152,12 +152,12 @@ class LibraryFilterAcceptanceTest {
     }
     private fun choice(label: String) {
         fun checkable(source: AccessibilityNodeInfo): Boolean {
-            var node: AccessibilityNodeInfo?=AccessibilityNodeInfo.obtain(source)
+            var node: AccessibilityNodeInfo?=source.copyNode()
             try { repeat(10) {
                 val current=node ?: return false
                 if (current.isCheckable && current.isClickable && current.isEnabled) return true
-                node=current.parent; current.recycle()
-            } } finally { node?.recycle() }
+                node=current.parent; current.recycleIfPooled()
+            } } finally { node?.recycleIfPooled() }
             return false
         }
         await("Native checkbox row ready: $label") {
@@ -167,10 +167,10 @@ class LibraryFilterAcceptanceTest {
                 repeat(10) {
                     val current=node ?: return@repeat
                     if (current.isCheckable && current.isClickable) return@await current.performAction(AccessibilityNodeInfo.ACTION_CLICK)
-                    node=current.parent; current.recycle()
+                    node=current.parent; current.recycleIfPooled()
                 }
                 false
-            } finally { node?.recycle() }
+            } finally { node?.recycleIfPooled() }
         }
         instrumentation.waitForIdleSync()
     }

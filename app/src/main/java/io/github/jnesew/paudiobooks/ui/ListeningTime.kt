@@ -35,7 +35,7 @@ internal fun listeningTime(ms: Long, spoken: Boolean = false): String {
 @Composable
 internal fun BookTime(total: Long?, position: Long?, speed: Float, finished: Boolean, labelDuration: Boolean) {
     val inProgress = !finished && total != null && total > 0 && position != null && position > 0
-    val remaining = if (inProgress) ((total!! - position!!).coerceAtLeast(0) /
+    val remaining = if (inProgress) ((total - position).coerceAtLeast(0) /
         io.github.jnesew.paudiobooks.preferences.PlaybackSpeed.sanitize(speed).toDouble()).coerceAtMost(Long.MAX_VALUE.toDouble()).toLong() else null
     val text = when {
         finished -> stringResource(R.string.finished)
@@ -51,6 +51,6 @@ internal fun BookTime(total: Long?, position: Long?, speed: Float, finished: Boo
     }
     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
         Text(text, Modifier.semantics { contentDescription = spoken }, style = MaterialTheme.typography.bodyMedium)
-        if (inProgress) LinearProgressIndicator(progress = { (position!!.toDouble() / total!!).toFloat().coerceIn(0f, 1f) }, modifier = Modifier.fillMaxWidth())
+        if (inProgress) LinearProgressIndicator(progress = { (position.toDouble() / total).toFloat().coerceIn(0f, 1f) }, modifier = Modifier.fillMaxWidth())
     }
 }

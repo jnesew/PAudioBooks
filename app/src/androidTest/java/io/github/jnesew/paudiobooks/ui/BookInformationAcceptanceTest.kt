@@ -38,22 +38,22 @@ class BookInformationAcceptanceTest {
         var count = 0
         fun visit(node: AccessibilityNodeInfo, depth: Int): AccessibilityNodeInfo? {
             if (++count > 700 || depth > 30 || !node.refresh()) return null
-            if (node.isVisibleToUser && predicate(node)) return AccessibilityNodeInfo.obtain(node)
+            if (node.isVisibleToUser && predicate(node)) return node.copyNode()
             for (i in 0 until node.childCount) {
                 val child = node.getChild(i) ?: continue
-                try { visit(child,depth+1)?.let { return it } } finally { child.recycle() }
+                try { visit(child,depth+1)?.let { return it } } finally { child.recycleIfPooled() }
             }
             return null
         }
         val windows = automation.windows
         try { for (window in windows) if (window.isActive || window.isFocused) {
             val root = window.root ?: continue
-            try { visit(root,0)?.let { return it } } finally { root.recycle() }
+            try { visit(root,0)?.let { return it } } finally { root.recycleIfPooled() }
         } } finally { windows.forEach { it.recycle() } }
         return null
     }
     private fun has(text: String): Boolean = find { it.text?.toString()?.contains(text) == true || it.contentDescription?.toString() == text }
-        ?.let { it.recycle(); true } ?: false
+        ?.let { it.recycleIfPooled(); true } ?: false
     private fun await(message: String, condition: () -> Boolean) {
         val end = SystemClock.elapsedRealtime()+8000
         while (SystemClock.elapsedRealtime()<end) { if (condition()) return; Thread.sleep(50) }
@@ -61,7 +61,7 @@ class BookInformationAcceptanceTest {
     }
     private fun scroll(direction: Int): Boolean {
         val node = find { it.isScrollable } ?: return false
-        return try { node.performAction(direction) } finally { node.recycle() }
+        return try { node.performAction(direction) } finally { node.recycleIfPooled() }
     }
     private fun reveal(text: String) {
         val end=SystemClock.elapsedRealtime()+15000
@@ -73,12 +73,12 @@ class BookInformationAcceptanceTest {
         error("Cannot reveal synthetic test control: $text")
     }
     private fun hasEnabledAction(source: AccessibilityNodeInfo): Boolean {
-        var node: AccessibilityNodeInfo?=AccessibilityNodeInfo.obtain(source)
+        var node: AccessibilityNodeInfo?=source.copyNode()
         try { repeat(10) {
             val current=node ?: return false
             if (current.isClickable && current.isEnabled) return true
-            node=current.parent; current.recycle()
-        } } finally { node?.recycle() }
+            node=current.parent; current.recycleIfPooled()
+        } } finally { node?.recycleIfPooled() }
         return false
     }
     private fun click(text: String) {
@@ -89,8 +89,8 @@ class BookInformationAcceptanceTest {
             try { repeat(10) {
                 val current=node ?: return@repeat
                 if (current.isClickable && current.isEnabled && current.performAction(AccessibilityNodeInfo.ACTION_CLICK)) return
-                node=current.parent; current.recycle()
-            } } finally { node?.recycle() }
+                node=current.parent; current.recycleIfPooled()
+            } } finally { node?.recycleIfPooled() }
             Thread.sleep(50)
         }
         capture("failure")
@@ -104,7 +104,7 @@ class BookInformationAcceptanceTest {
     }
     private fun outside(title: String) {
         val node=find { it.text?.toString()==title && !it.isClickable } ?: error("Missing dialog heading")
-        val bounds=Rect(); try { node.getBoundsInScreen(bounds) } finally { node.recycle() }
+        val bounds=Rect(); try { node.getBoundsInScreen(bounds) } finally { node.recycleIfPooled() }
         instrumentation.waitForIdleSync()
         // InputDialog has a full-screen scrim and a 24 dp side margin.
         val x=1f; val y=bounds.exactCenterY(); val now=SystemClock.uptimeMillis()
@@ -114,7 +114,7 @@ class BookInformationAcceptanceTest {
             try { assertTrue(automation.injectInputEvent(event,true)) } finally { event.recycle() }
         }
     }
-    private fun pane(title: String) = find { AccessibilityNodeInfoCompat.wrap(it).paneTitle?.toString()==title }?.let { it.recycle(); true } ?: false
+    private fun pane(title: String) = find { AccessibilityNodeInfoCompat.wrap(it).paneTitle?.toString()==title }?.let { it.recycleIfPooled(); true } ?: false
 
     private fun fixture(populated: Boolean, trial: (ActivityScenario<MainActivity>,String) -> Unit) = runBlocking {
         org.junit.Assume.assumeTrue(InstrumentationRegistry.getArguments().getString("hostDriven")=="true")

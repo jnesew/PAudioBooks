@@ -67,7 +67,7 @@ class FileBoundaryPlaybackTest {
             assertEquals(SessionResult.RESULT_SUCCESS,command(PlaybackService.LOAD_BOOK,Bundle().apply { putString(PlaybackService.BOOK_ID,book) }).resultCode)
             await("Legacy player ready") { main { controller!!.playbackState==Player.STATE_READY } }
             assertEquals(SessionResult.RESULT_SUCCESS,command(PlaybackService.SEEK_CHAPTER,Bundle().apply { putString(PlaybackService.CHAPTER_ID,details.chapters.last().id) }).resultCode)
-            await("Derived file chapter seek acknowledged") { main { controller!!.currentMediaItemIndex==1 && controller!!.playbackState==Player.STATE_READY } }
+            await("Derived file chapter seek acknowledged") { main { controller!!.currentMediaItemIndex==1 && controller.playbackState==Player.STATE_READY } }
             assertFalse(main { controller!!.playWhenReady })
             assertEquals(SessionResult.RESULT_SUCCESS,command(PlaybackService.PAUSE_AND_SAVE).resultCode)
             assertEquals(tracks.last().id,app.library.library().progress(book)!!.trackId)
@@ -75,7 +75,7 @@ class FileBoundaryPlaybackTest {
             assertEquals("Keep boundary translator",app.library.books().get(book)!!.translatorOverride)
             for (track in tracks) assertTrue(app.library.library().chapters(track.id).isEmpty())
         } finally {
-            if (controller!=null) { runCatching { command(PlaybackService.UNLOAD_AND_SAVE) }; main { controller!!.release() } }
+            if (controller!=null) { runCatching { command(PlaybackService.UNLOAD_AND_SAVE) }; main { controller.release() } }
             app.importer.removeBook(book)
             files.forEach { if (it.exists()) it.delete() }
         }
