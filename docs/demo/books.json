@@ -1,0 +1,46 @@
+[
+  {
+    "id": "glass-harbor",
+    "title": "The Glass Harbor",
+    "author": "Mira Vale",
+    "genre": "Fantasy, Adventure",
+    "narrator": "Sam Reed",
+    "publisher": "Paper Lantern Audio",
+    "date": "2026-04-14",
+    "hours": 8.5,
+    "description": "When the lamps of a floating harbor begin to fade, a young mapmaker follows a tide that no chart remembers. A fictional coastal adventure created for the PAudioBooks demo library."
+  },
+  {
+    "id": "quiet-stars",
+    "title": "A Map of Quiet Stars",
+    "author": "Niko Arden",
+    "genre": "Science fiction, Adventure",
+    "narrator": "Alex Linden",
+    "publisher": "Paper Lantern Audio",
+    "date": "2026-06-02",
+    "hours": 6.75,
+    "description": "A radio cartographer crosses a silent star system in search of a signal recorded before her birth. A fictional space journey created for the PAudioBooks demo library."
+  },
+  {
+    "id": "last-orchard",
+    "title": "The Last Orchard",
+    "author": "Elin Marsh",
+    "genre": "Mystery, Fiction",
+    "narrator": "Robin Ellis",
+    "publisher": "Paper Lantern Audio",
+    "date": "2026-09-08",
+    "hours": 10.25,
+    "description": "An unsigned letter brings a conservator back to an abandoned orchard, where each tree marks a secret. A fictional countryside mystery created for the PAudioBooks demo library."
+  },
+  {
+    "id": "moss-trail",
+    "title": "Along the Moss Trail",
+    "author": "Rowan Hale",
+    "genre": "Nature, Travel",
+    "narrator": "Jamie Brook",
+    "publisher": "Paper Lantern Audio",
+    "date": "2026-03-19",
+    "hours": 4.5,
+    "description": "Field notes from a slow walk through rain-soaked woodland: ferns, small streams, and the changes we notice when we stop. A fictional nature collection created for the PAudioBooks demo library."
+  }
+]

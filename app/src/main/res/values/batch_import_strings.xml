@@ -1,0 +1,38 @@
+<resources>
+    <plurals name="book_folder_files">
+        <item quantity="one">%1$s (%2$d file)</item>
+        <item quantity="other">%1$s (%2$d files)</item>
+    </plurals>
+    <string name="select_all">Select all</string>
+    <string name="select_none">Select none</string>
+    <plurals name="books_selected">
+        <item quantity="one">%d book selected</item>
+        <item quantity="other">%d books selected</item>
+    </plurals>
+    <plurals name="review_books">
+        <item quantity="one">Review %d book</item>
+        <item quantity="other">Review %d books</item>
+    </plurals>
+    <string name="batch_current_book">Book %1$d of %2$d: %3$s</string>
+    <string name="batch_keep_added">Books already added stay in your library if you cancel.</string>
+    <string name="add_and_continue">Add and continue</string>
+    <string name="import_results">Import results</string>
+    <string name="batch_added">Added</string>
+    <string name="batch_skipped">Skipped</string>
+    <string name="batch_failed">Could not add</string>
+    <string name="batch_pending">Not added</string>
+    <string name="retry_unfinished">Retry remaining books</string>
+    <string name="done">Done</string>
+    <string name="adding_books">Adding books</string>
+    <string name="finding_books">Finding books</string>
+    <string name="choose_books">Choose books</string>
+    <string name="reading_file">File %1$d of %2$d</string>
+    <string name="edit_import_details">Book details</string>
+    <string name="edit_import">Edit</string>
+    <string name="edit_import_book">Edit %1$s</string>
+    <string name="audio_already_added">Audio already in your library</string>
+    <plurals name="add_books_count">
+        <item quantity="one">Add %d book</item>
+        <item quantity="other">Add %d books</item>
+    </plurals>
+</resources>

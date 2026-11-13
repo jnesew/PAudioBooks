@@ -1,0 +1,16 @@
+<resources>
+    <string name="close">Close</string>
+    <string name="saving">Saving…</string>
+    <string name="default_speed_help">Used when a book has no remembered speed.</string>
+    <string name="decrease_speed">−</string>
+    <string name="increase_speed">+</string>
+    <string name="decrease_speed_label">Decrease speed by 0.05×</string>
+    <string name="increase_speed_label">Increase speed by 0.05×</string>
+    <string name="speed_update_failed">Could not change speed. Try again.</string>
+    <string name="chapter_count_position">%1$d of %2$d</string>
+    <string name="jump_to_chapter">Jump to chapter %1$d, %2$s</string>
+    <string name="current_chapter">Current</string>
+    <string name="current_chapter_times">Current · %1$s · −%2$s</string>
+    <string name="jump_to_bookmark">Jump to bookmark, %1$s, %2$s</string>
+    <string name="bookmark_actions">Bookmark actions, %1$s, %2$s</string>
+</resources>

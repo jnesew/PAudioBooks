@@ -1,0 +1,37 @@
+<resources>
+    <string name="action_state">%1$s, %2$s</string>
+    <string name="collapse_player">Close player</string>
+    <string name="sleep_active">Timer on</string>
+    <string name="sleep_inactive">Timer off</string>
+    <string name="listening_left">%1$s left</string>
+    <string name="under_minute">&lt;1m</string>
+    <string name="under_minute_spoken">Less than a minute</string>
+    <string name="duration_parts">%1$s %2$s</string>
+    <string name="hours_short">%1$dh</string>
+    <string name="minutes_short">%1$dm</string>
+    <plurals name="hours_spoken"><item quantity="one">%1$d hour</item><item quantity="other">%1$d hours</item></plurals>
+    <plurals name="minutes_spoken"><item quantity="one">%1$d minute</item><item quantity="other">%1$d minutes</item></plurals>
+    <string name="book_information">Book information</string>
+    <string name="book_actions">Book actions</string>
+    <string name="replay_book">Play again</string>
+    <string name="reset_progress">Reset progress</string>
+    <string name="reset_progress_explanation">Return this book to the beginning and mark it unplayed? Bookmarks and notes are kept.</string>
+    <string name="reset">Reset</string>
+    <string name="narrator_credit">Narrator: %1$s</string>
+    <string name="translator_credit">Translator: %1$s</string>
+    <string name="series_credit">Series: %1$s</string>
+    <string name="series_number_credit">%1$s · %2$s</string>
+    <string name="show_more">Show more</string>
+    <plurals name="chapter_count"><item quantity="one">%1$d chapter</item><item quantity="other">%1$d chapters</item></plurals>
+    <plurals name="bookmark_count"><item quantity="one">%1$d bookmark</item><item quantity="other">%1$d bookmarks</item></plurals>
+    <string name="seek_here">Go to position</string>
+    <string name="total_duration">Duration: %1$s</string>
+    <string name="private_copy">Private copy</string>
+    <string name="seek_back_value">%1$d s</string>
+    <string name="book_translator">Translator</string>
+    <string name="book_series_number">Series number</string>
+    <string name="show_less">Show less</string>
+    <string name="audio_available">Audio available</string>
+    <string name="audio_unavailable">Audio unavailable</string>
+    <string name="count_value">%1$d</string>
+</resources>

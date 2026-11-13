@@ -1,0 +1,8 @@
+<resources>
+    <string name="audio_files">Audio files</string>
+    <string name="book_genre">Genre</string>
+    <string name="book_publisher">Publisher</string>
+    <string name="book_released">Released</string>
+    <string name="private_audio_help">This app keeps an audio copy. Moving or removing the originals won’t affect playback.</string>
+    <string name="linked_audio_help">Playback uses your selected files. Keep them in their current location.</string>
+</resources>

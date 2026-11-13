@@ -1,0 +1,45 @@
+<resources>
+    <string name="link_explanation">Books play from this location. Keep the files available.</string>
+    <string name="linked_audio">Linked audio</string>
+    <string name="link_failed">Could not read these files. Check that they are available, then try again.</string>
+    <string name="link_nonseekable">These files cannot be played from this location. Move them to a folder on your device, then select them again.</string>
+    <string name="link_grant_failed">Could not keep access to these files. Choose a folder on your device and try again.</string>
+    <string name="link_metadata_pending">Some book details are missing. You can try Read metadata in Audio files.</string>
+    <string name="verify_audio">Verify audio identity</string>
+    <string name="verify_audio_explanation">Read all linked audio to enable matching for progress transfer and reconnecting a moved file. This can take time. Playback will pause. Sources are never changed.</string>
+    <string name="verifying_audio">Verifying audio</string>
+    <string name="source_bytes_read">%1$s read</string>
+    <string name="source_work_files">Files: %1$d of %2$d</string>
+    <string name="source_work_complete">Audio identity verified</string>
+    <string name="reconnect_audio">Reconnect audio</string>
+    <string name="reconnect_explanation">Select the original audio files. Their full contents must match the previously verified audio. Progress, notes, and edits are kept. Files that were never verified cannot be matched to a new location after the original is lost.</string>
+    <string name="unverified_audio">Verify the original linked audio before matching it to another location. If the original is gone, keep this entry for its notes and add the new audio separately.</string>
+    <string name="remove_linked_explanation">Remove this book, its progress, bookmarks, and notes? The linked source files will remain untouched.</string>
+    <string name="transfer_needs_verification">Verify audio in Audio files before exporting or matching progress. This reads the full audio files.</string>
+    <string name="size_unknown">Size unknown</string>
+    <string name="grant_folder_access">Choose folder again</string>
+    <string name="source_access_restored">Audio reconnected</string>
+    <plurals name="restored_source_access"><item quantity="one">Access restored for %1$d file.</item><item quantity="other">Access restored for %1$d files.</item></plurals>
+    <string name="rescan_folder">Rescan folder</string>
+    <string name="rescanning_folder">Checking folder</string>
+    <string name="review_rescan">Folder changes</string>
+    <string name="new_files">New files</string>
+    <string name="review_new_files">Review new files</string>
+    <string name="rescan_retained">Existing tracks: %1$d</string>
+    <string name="rescan_missing">Missing: %1$d</string>
+    <string name="rescan_changed">Changed size: %1$d</string>
+    <string name="rescan_preservation">Existing tracks, order, progress, notes, and edits are kept. New files are added only after review.</string>
+    <string name="rescan_no_new_files">No new audio files found.</string>
+    <string name="rescan_failed">Could not finish checking this folder. Existing tracks, progress, and notes are kept. Make the source available and try again.</string>
+    <string name="append_explanation">Add these files after the existing tracks. Their order and all saved progress, notes, and edits are kept. A loaded book will pause while its playlist updates.</string>
+    <plurals name="audio_file_count"><item quantity="one">%1$d file</item><item quantity="other">%1$d files</item></plurals>
+    <string name="add_files">Add files</string>
+    <string name="audio_unchecked">Audio availability not checked</string>
+    <string name="retry_audio">Try audio again</string>
+    <string name="read_metadata">Read metadata</string>
+    <string name="read_metadata_explanation">Read the audio files for missing covers, chapters, and book details. If this book is in the player, playback will pause. Your progress, bookmarks, and edits are kept.</string>
+    <string name="metadata_read_complete">Book details checked</string>
+    <string name="read_metadata_failed">Could not read all the book details. Check that the files are available, then try again. Your progress, bookmarks, and edits are kept.</string>
+    <plurals name="metadata_still_pending"><item quantity="one">Book details are incomplete for %1$d file. You can keep listening.</item><item quantity="other">Book details are incomplete for %1$d files. You can keep listening.</item></plurals>
+    <string name="source_permission_capacity">Too many separate locations. Choose a shared parent folder or fewer files.</string>
+</resources>

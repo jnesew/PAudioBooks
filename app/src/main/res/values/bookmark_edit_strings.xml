@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="edit_bookmark_note">Edit note</string>
+    <string name="bookmark_note_too_long">Note must be 4,096 characters or fewer</string>
+    <string name="bookmark_note_update_failed">Could not save bookmark note. Try again.</string>
+</resources>

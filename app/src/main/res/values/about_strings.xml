@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="about_heading">About</string>
+    <string name="about_app_description">Offline audiobook player for Android.</string>
+    <string name="about_version_format">Version %1$s</string>
+    <string name="about_version_unavailable">Version unavailable</string>
+    <string name="about_version_loading">Checking version…</string>
+
+    <string name="about_privacy_heading">Privacy</string>
+    <string name="about_privacy_text">No accounts, ads, or tracking. Your library, progress, and bookmarks stay on this device unless you export them.</string>
+
+    <string name="about_permissions_heading">Permissions</string>
+    <string name="about_perm_playback_title">Background listening</string>
+    <string name="about_perm_playback_desc">Keep listening when you switch apps, with controls on your lock screen.</string>
+    <string name="about_perm_wakelock_title">Screen-off listening</string>
+    <string name="about_perm_wakelock_desc">Keep audio playing while your screen is off.</string>
+    <string name="about_perm_storage_title">Files you choose</string>
+    <string name="about_perm_storage_desc">Only files and folders you choose are read. Your originals are never changed or deleted.</string>
+
+    <string name="about_licenses_heading">Open source licenses</string>
+    <string name="about_licenses_button">View licenses and notices</string>
+    <string name="about_licenses_dialog_title">Open source licenses</string>
+    <string name="about_licenses_intro">Third-party open source software used in this application:</string>
+    <string name="about_license_apache_title">Apache License 2.0</string>
+    <string name="about_license_apache_desc">AndroidX, Jetpack Compose, Media3, Room, Kotlin coroutines</string>
+    <string name="about_license_protobuf_title">Protocol Buffers License</string>
+    <string name="about_license_protobuf_desc">Google Protocol Buffers runtime (BSD 3-Clause)</string>
+    <string name="about_license_datastore_title">AndroidX DataStore Repackaged Protobuf</string>
+    <string name="about_license_datastore_desc">Bundled artifact license notice (BSD 3-Clause)</string>
+    <string name="about_license_inventory_title">Third-party libraries</string>
+    <string name="about_license_inventory_desc">Catalog of runtime open source components</string>
+    <string name="about_license_loading">Loading license document…</string>
+    <string name="about_license_load_error">Could not load this license text.</string>
+    <string name="about_catalog_item_format">%1$s · %2$s</string>
+    <string name="about_dialog_close">Close</string>
+</resources>

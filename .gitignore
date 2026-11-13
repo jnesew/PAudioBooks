@@ -1,0 +1,33 @@
+# Local Android/Gradle state
+.gradle/
+.kotlin/
+.idea/
+*.iml
+local.properties
+**/build/
+.cxx/
+.externalNativeBuild/
+__pycache__/
+*.py[cod]
+
+# Signing material and local secrets
+*.jks
+*.keystore
+keystore.properties
+.env
+.env.*
+!.env.example
+
+# Generated outputs and private test media
+*.apk
+*.aab
+captures/
+test-media/generated/
+test-media/private/
+
+# Host files
+.DS_Store
+Thumbs.db
+
+# Local checkpoints, acceptance evidence, notes and design iterations
+/docs/local/

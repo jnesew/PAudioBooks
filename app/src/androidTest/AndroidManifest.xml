@@ -1,0 +1,26 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application>
+        <provider android:name="io.github.jnesew.paudiobooks.storage.LinkedFixtureProvider"
+            android:authorities="io.github.jnesew.paudiobooks.test.linkedfixture" android:exported="true" android:grantUriPermissions="true" />
+        <provider android:name="io.github.jnesew.paudiobooks.importing.FixtureProvider"
+            android:authorities="io.github.jnesew.paudiobooks.test.fixture" android:exported="true" />
+        <provider android:name="io.github.jnesew.paudiobooks.importing.SlowDocumentsProvider"
+            android:authorities="io.github.jnesew.paudiobooks.test.slowdocuments"
+            android:exported="true" android:grantUriPermissions="true"
+            android:permission="android.permission.MANAGE_DOCUMENTS">
+            <intent-filter>
+                <action android:name="android.content.action.DOCUMENTS_PROVIDER" />
+            </intent-filter>
+        </provider>
+        <provider android:name="io.github.jnesew.paudiobooks.importing.BatchDocumentsProvider"
+            android:authorities="io.github.jnesew.paudiobooks.test.batchdocuments"
+            android:exported="true" android:grantUriPermissions="true"
+            android:permission="android.permission.MANAGE_DOCUMENTS">
+            <intent-filter>
+                <action android:name="android.content.action.DOCUMENTS_PROVIDER" />
+            </intent-filter>
+        </provider>
+        <service android:name="io.github.jnesew.paudiobooks.security.JavaExternalControllerService"
+            android:exported="true" android:process=":externalcontroller" />
+    </application>
+</manifest>

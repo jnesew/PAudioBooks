@@ -1,0 +1,30 @@
+<resources>
+    <!-- D01: Folder grouping choices -->
+    <string name="grouping_options">Folder structure</string>
+    <string name="grouping_disc_single_book">Single book with disc folders</string>
+    <string name="grouping_separate_books">Separate books per folder</string>
+    <string name="grouping_combine_all">Combine all into one book</string>
+    <string name="group_selection_label">%1$s (%2$d files)</string>
+
+    <!-- D02: Duplicate audio choices -->
+
+    <!-- D03: Foreground-only interruption notice -->
+    <string name="import_interrupted_foreground">Import stopped when you left the app. Keep the app open while adding books.</string>
+    <string name="keep_screen_on_notice">Keep the app open until this finishes.</string>
+
+    <!-- D04: Determinate progress text -->
+    <string name="bytes_copied_of_total">%1$s of %2$s copied</string>
+    <string name="repair_audio">Repair audio</string>
+    <string name="repair_explanation">Choose the original files again. Only files matching this book’s saved fingerprints can replace its private audio. Progress, bookmarks and edits stay unchanged.</string>
+    <string name="repair_pauses_book">Playback of this book will pause.</string>
+    <string name="repair_failed">Could not finish repairing the audio. Some private files may already be restored. Choose the original files for this book and check that there is enough free space. Your progress, bookmarks and edits are unchanged.</string>
+    <string name="repair_complete">Audio repaired</string>
+    <plurals name="repaired_audio_files">
+        <item quantity="one">%d private audio file restored. Progress, bookmarks and edits are unchanged.</item>
+        <item quantity="other">%d private audio files restored. Progress, bookmarks and edits are unchanged.</item>
+    </plurals>
+    <string name="import_file_in_folder">%1$s/%2$s</string>
+    <string name="source_reader_busy">This location is taking too long to respond. Wait, then try again. If it stays stuck, stop PAudioBooks in Android settings and reopen it. Your library is kept.</string>
+    <string name="source_read_timeout">The files took too long to open. Try again, or copy them to this device with a file manager first.</string>
+    <string name="import_metadata_limit">This selection has too much chapter metadata. Import smaller groups of files.</string>
+</resources>

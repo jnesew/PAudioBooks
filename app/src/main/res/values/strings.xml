@@ -1,0 +1,132 @@
+<resources>
+    <string name="app_name">PAudioBooks</string>
+    <string name="library">Library</string><string name="settings">Settings</string>
+    <string name="empty_title">Add your first audiobook</string>
+    <string name="empty_description">Choose files or a folder from your device.</string>
+    <string name="choose_files">Choose files</string><string name="choose_folder">Choose a folder</string>
+    <string name="picker_result_title">Import is not ready yet</string>
+    <string name="picker_result_message">Your selection was not imported. Importing books is not available yet. Your original files are unchanged.</string>
+    <string name="picker_unavailable">No compatible file picker is available on this device.</string>
+    <string name="ok">OK</string><string name="appearance">Appearance</string><string name="theme">Theme</string>
+    <string name="system">System</string><string name="light">Light</string><string name="dark">Dark</string>
+    <string name="settings_read_error_title">Could not load settings</string>
+    <string name="settings_read_error">Try again to load your saved appearance.</string>
+    <string name="settings_write_error_title">Could not save theme</string>
+    <string name="settings_write_error">Your theme was not saved. Try selecting it again.</string>
+    <string name="retry">Try again</string>
+    <string name="library_read_error">Could not load your library. Try again.</string>
+    <string name="untitled_book">Untitled audiobook</string>
+    <string name="selection_failed">Could not read this selection. Choose up to 1,000 audio files or a smaller folder.</string>
+    <string name="import_failed">Could not import this book. Check that the files are supported and there is enough free space, then choose them again.</string>
+    <string name="cleanup_failed">Could not clear some unfinished work. Try again from Unfinished imports.</string>
+    <string name="removal_failed">Could not finish removing this book. Your original files are unchanged. Try again.</string>
+    <string name="add_books">Add books</string>
+    <string name="search_books">Search books</string>
+    <string name="all_books">All</string>
+    <string name="library_in_progress">In progress</string>
+    <string name="unplayed">Unplayed</string>
+    <string name="finished">Finished</string>
+    <string name="no_matches">No matching audiobooks</string>
+    <string name="continue_listening">Continue listening</string>
+    <string name="book_title">Title</string>
+    <string name="book_author">Author</string>
+    <string name="book_narrator">Narrator</string>
+    <string name="book_series">Series</string>
+    <string name="review_selection">Review selection</string>
+    <string name="cancel">Cancel</string>
+    <string name="reading_metadata">Reading book details</string>
+    <plurals name="files_copied"><item quantity="one">%1$d of %2$d file copied</item><item quantity="other">%1$d of %2$d files copied</item></plurals>
+    <string name="bytes_copied">%1$s copied</string>
+    <string name="review_book">Review book</string>
+    <string name="add_to_library">Add to library</string>
+    <string name="move_up">Move %1$s up</string>
+    <string name="move_down">Move %1$s down</string>
+    <string name="unfinished_imports">Unfinished imports</string>
+    <string name="unfinished_explanation">Clear unfinished import work? Added books and original files are kept.</string>
+    <string name="later">Later</string>
+    <string name="discard_copies">Clean up</string>
+    <string name="back">Back</string>
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="resume">Resume</string>
+    <string name="stop">Stop</string>
+    <string name="player">Now playing</string>
+    <string name="open_player">Open player</string>
+    <string name="chapters">Chapters</string>
+    <string name="bookmarks">Bookmarks</string>
+    <string name="speed">Speed</string>
+    <string name="sleep_timer">Sleep timer</string>
+    <string name="add_bookmark">Add bookmark</string>
+    <string name="chapter_scope">Chapter</string>
+    <string name="book_scope">Book</string>
+    <string name="seek_scope">Seek scope</string>
+    <string name="seek_position">Position</string>
+    <string name="seek_accessible_value">%1$s of %2$s</string>
+    <string name="back_seconds">Back 10 seconds</string>
+    <string name="forward_seconds">Forward 30 seconds</string>
+    <string name="previous_chapter">Previous chapter</string>
+    <string name="next_chapter">Next chapter</string>
+    <string name="chapter_number">Chapter %1$d</string>
+    <string name="file_number">File %1$d</string>
+    <string name="unknown_duration">Unknown duration</string>
+    <string name="duration_label">Duration: %1$s</string>
+    <string name="size_label">Size: %1$s</string>
+    <string name="time_left">%1$s listening left</string>
+    <string name="remove_book">Remove book</string>
+    <string name="remove_explanation">Remove this book’s private audio copies (%1$s), progress, and bookmarks? Your original files stay unchanged.</string>
+    <string name="remove">Remove</string>
+    <string name="playback_failed">Could not play this book. Check that its audio files are available and supported, then try again. Your progress is kept.</string>
+    <string name="progress_save_failed">Playback paused because progress could not be saved. Free some device space, then try again.</string>
+    <string name="settings_error">Something went wrong</string>
+    <string name="speed_value">%1$.2f×</string>
+    <string name="bookmark_note">Note</string>
+    <string name="save">Save</string>
+    <string name="edit_details">Edit book</string>
+    <string name="reset_overrides">Reset edits</string>
+    <string name="local_only">Your library stays on this device. No accounts, network access, or sync.</string>
+    <string name="about">About</string>
+    <string name="version">PAudioBooks %1$s</string>
+<plurals name="files_selected"><item quantity="one">%1$d file selected</item><item quantity="other">%1$d files selected</item></plurals>
+    <string name="other_files">Show other files</string>
+<plurals name="minutes"><item quantity="one">%1$d minute</item><item quantity="other">%1$d minutes</item></plurals>
+    <string name="end_of_chapter">End of chapter</string>
+    <string name="cancel_sleep_timer">Stop timer</string>
+<string name="bookmark_failed">Could not save bookmark. Try again.</string>
+<string name="forward_short">+30</string>
+    <string name="back_short">−10</string>
+    <string name="previous_short">|◀</string>
+    <string name="next_short">▶|</string>
+<string name="up_arrow">↑</string>
+    <string name="down_arrow">↓</string>
+<string name="playback_settings">Playback</string>
+<plurals name="skip_back_setting"><item quantity="one">Skip back: %1$d second</item><item quantity="other">Skip back: %1$d seconds</item></plurals>
+<plurals name="skip_forward_setting"><item quantity="one">Skip forward: %1$d second</item><item quantity="other">Skip forward: %1$d seconds</item></plurals>
+<string name="skip_back">Skip back</string><string name="skip_forward">Skip forward</string>
+<plurals name="seconds"><item quantity="one">%1$d second</item><item quantity="other">%1$d seconds</item></plurals><string name="smart_rewind">Smart rewind</string>
+<plurals name="back_by_seconds"><item quantity="one">Back %1$d second</item><item quantity="other">Back %1$d seconds</item></plurals><plurals name="forward_by_seconds"><item quantity="one">Forward %1$d second</item><item quantity="other">Forward %1$d seconds</item></plurals>
+<string name="back_short_value">−%1$d</string><string name="forward_short_value">+%1$d</string>
+<string name="edit_failed">Could not save book details. Try again.</string>
+<string name="progress_transfer">Progress transfer</string>
+<string name="export_progress">Export progress</string><string name="import_progress">Import progress</string>
+<string name="export_explanation">Save titles, audio fingerprints, progress, bookmarks, and edited details to a file you choose. Audio files and document permissions are not included. Playback will pause to save current progress.</string>
+<string name="import_explanation">Choose a previously exported progress file. You can review matching books and select which local details to replace.</string>
+<string name="continue_label">Continue</string><string name="working">Working</string><string name="transfer_complete">Transfer complete</string>
+<string name="review_progress">Review progress</string><string name="replace_explanation">Choose a local book for each imported record you want to restore. Applying replaces that book’s current progress, bookmarks, and edited details. Unselected books stay unchanged. Matching uses audio fingerprints.</string>
+<string name="no_matching_copy">No matching local audio</string><string name="skip_this_book">Skip this book</string><string name="replace_selected">Replace selected</string>
+<string name="portability_failed">Could not transfer progress. Check the file and try again.</string>
+<string name="sort_books">Sort</string><string name="choose_cover">Choose cover</string>
+    <string name="reset_cover">Reset cover</string>
+    <string name="cover_interrupted">Cover selection was interrupted. Choose the image again.</string>
+    <string name="cover_failed">Could not update the cover. Choose another image and try again.</string>
+    <string name="lock_screen_details">Show book details on lock screen</string>
+    <string name="audio_storage">Audio stored in app: %1$s</string>
+    <string name="export_incomplete">The export did not finish. The selected file may be incomplete; export again to create a new file.</string>
+    <string name="undo_seek">Undo seek</string>
+    <string name="grid_view">Grid view</string>
+    <string name="list_view">List view</string>
+    <string name="mark_finished">Mark finished</string>
+    <string name="mark_unplayed">Mark unplayed</string>
+    <string name="sort_added">Date added</string>
+    <string name="sort_recent">Recent</string>
+<string name="bookmark_position">File %1$d · %2$s</string>
+</resources>

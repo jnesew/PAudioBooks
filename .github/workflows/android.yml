@@ -1,0 +1,30 @@
+name: Android foundation
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Select JDK 17 and Android SDK
+        run: |
+          echo "JAVA_HOME=$JAVA_HOME_17_X64" >> "$GITHUB_ENV"
+          echo "$JAVA_HOME_17_X64/bin" >> "$GITHUB_PATH"
+          sdkmanager 'platforms;android-37' 'build-tools;36.0.0'
+      - name: Build and lint with strict dependency verification
+        run: ./gradlew --dependency-verification strict :app:assembleDebug :app:lintDebug :app:testDebugUnitTest :app:processReleaseMainManifest --console plain
+      - name: Inspect resolved release dependencies
+        run: |
+          mkdir -p app/build/reports
+          ./gradlew --dependency-verification strict :app:dependencies --configuration releaseRuntimeClasspath --console plain > app/build/reports/release-runtime-dependencies.txt
+          python3 tools/verification/check_release.py app/build/intermediates/merged_manifest/release/processReleaseMainManifest/AndroidManifest.xml app/build/reports/release-runtime-dependencies.txt
+          python3 -m unittest discover -s tools/verification -v
+      - name: Check Room schema is current
+        run: git diff --exit-code -- app/schemas
