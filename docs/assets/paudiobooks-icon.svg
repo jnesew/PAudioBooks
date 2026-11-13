@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">PAudioBooks: headphones over an open book</title>
+  <rect width="512" height="512" rx="48" fill="#315C49"/>
+  <g fill="#FFFFFF">
+    <path d="M106 267V247C106 163 173 95 256 95S406 163 406 247V267" fill="none" stroke="#FFFFFF" stroke-width="34" stroke-linecap="round"/>
+    <rect x="64" y="249" width="72" height="123" rx="36"/>
+    <rect x="376" y="249" width="72" height="123" rx="36"/>
+    <path d="M148 277C148 262 157 256 175 256C203 256 230 267 245 281C250 286 251 289 251 296V417C251 421 248 422 244 419C223 406 203 400 178 401C158 402 148 401 148 384Z"/>
+    <path d="M364 277C364 262 355 256 337 256C309 256 282 267 267 281C262 286 261 289 261 296V417C261 421 264 422 268 419C289 406 309 400 334 401C354 402 364 401 364 384Z"/>
+  </g>
+</svg>

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.1 — 2026-11-13
+
+- Replace the launcher icon with white headphones over an open book on forest green.
+- Support launcher icon shapes and Android's themed icons.
+
+See the [release notes](docs/RELEASE-NOTES-0.1.1.md) for update details.
+
 ## 0.1.0 — 2026-11-13
 
 Initial release of PAudioBooks for Android 8.0 and newer.

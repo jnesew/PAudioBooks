@@ -1,5 +1,14 @@
 # Documentation assets
 
+## App icon
+
+[paudiobooks-icon.svg](paudiobooks-icon.svg) contains white headphones over an
+open book on forest green `#315C49`. [paudiobooks-icon.png](paudiobooks-icon.png)
+is its 512-pixel export. Both use the repository's [MIT license](../../LICENSE).
+The Android launcher uses separate native adaptive vector layers.
+
+## Obtainium badge
+
 `obtainium.png` is the unmodified official “Get it on Obtainium” badge from
 [Obtainium's graphics](https://github.com/ImranR98/Obtainium/blob/main/assets/graphics/badge_obtainium.png),
 copied locally as recommended by its

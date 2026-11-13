@@ -3,6 +3,7 @@
 ## Using the app
 
 - [Usage guide](USAGE.md): adding books, listening tools, library management, and recovery.
+- [0.1.1 release notes](RELEASE-NOTES-0.1.1.md): launcher icon update.
 - [0.1.0 release notes](RELEASE-NOTES-0.1.0.md): initial features, installation and limitations.
 - [Changelog](../CHANGELOG.md): changes by release cycle.
 - [Security reporting](../SECURITY.md): private vulnerability reports and safe diagnostics.
@@ -15,7 +16,7 @@
 - [Signing](SIGNING.md): unsigned artifacts, signing identity, and manual APK signing.
 - [Forking](FORKING.md): license, independent app identity, and distribution considerations.
 - [Demo library](demo/README.md): fictional screenshot content and reproducible media generation.
-- [Documentation assets](assets/README.md): Obtainium badge source and license.
+- [Documentation assets](assets/README.md): app icon and Obtainium badge provenance.
 
 ## Product and technical specifications
 

@@ -1,5 +1,7 @@
 # PAudioBooks
 
+<img src="docs/assets/paudiobooks-icon.png" width="96" alt="PAudioBooks icon: headphones over an open book">
+
 An offline audiobook player for Android 8.0 and newer. Listen to your own local
 books without an account, internet connection, or Google Play services.
 
@@ -8,7 +10,7 @@ books without an account, internet connection, or Google Play services.
 [Releases](https://github.com/jnesew/PAudioBooks/releases) ·
 [Usage guide](docs/USAGE.md) · [Build from source](docs/BUILDING.md)
 
-The [initial release notes](docs/RELEASE-NOTES-0.1.0.md) cover compatibility and
+The [release notes](docs/RELEASE-NOTES-0.1.1.md) cover changes, compatibility and
 known limitations. Obtainium needs a published, signed APK release;
 the badge adds this repository as its source. Obtainium handles downloads and
 updates separately from the offline player.
