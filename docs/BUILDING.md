@@ -26,6 +26,10 @@ and Media3 pins are in [the version catalog](../gradle/libs.versions.toml).
 The app uses minSdk 26 and compile/target SDK 37. Repository configuration is the
 source of truth for these versions; do not replace it with global Gradle settings.
 
+App version names and Android version codes follow [Releasing](RELEASING.md).
+Choose them once per release cycle in `app/build.gradle.kts`; ordinary builds do
+not bump them.
+
 The first build may download the wrapper, plugins, and dependencies. Later builds
 can add `--offline` when all required artifacts are cached. Build-time downloads
 do not add networking to the installed app.

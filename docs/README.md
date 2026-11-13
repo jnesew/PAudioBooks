@@ -8,6 +8,7 @@
 
 - [Building](BUILDING.md): toolchain, SDK setup, variants, and installation.
 - [Testing](TESTING.md): checks, synthetic fixtures, and device verification.
+- [Releasing](RELEASING.md): version bumps, release cycles, version codes, notes, and tags.
 - [Signing](SIGNING.md): unsigned artifacts, signing identity, and manual APK signing.
 - [Forking](FORKING.md): license, independent app identity, and distribution considerations.
 - [Demo library](demo/README.md): fictional screenshot content and reproducible media generation.

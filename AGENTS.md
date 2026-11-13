@@ -44,6 +44,7 @@ artifact as a release-ready application.
 - `docs/SECURITY_AND_PERMISSIONS.md`: permission budget and trust boundaries.
 - `docs/IMPLEMENTATION_PLAN.md`: implementation order and release gates.
 - `docs/BUILDING.md`, `docs/TESTING.md`, `docs/SIGNING.md`: reusable developer procedures.
+- `docs/RELEASING.md`: version bumps, release cycles, Android codes, notes, and tags.
 - Local status/acceptance files above, when available; never assume past results
   validate changed source or invent missing evidence.
 

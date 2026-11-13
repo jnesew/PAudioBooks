@@ -8,6 +8,7 @@ production `release` variant has no signing configuration and produces
 until signed. See [the variant decision](decisions/0004-minified-validation.md).
 
 Build and verify first using [Building](BUILDING.md) and [Testing](TESTING.md).
+Choose the release version and code using [Releasing](RELEASING.md) before signing.
 An unsigned release should fail `apksigner verify` because it has no signature;
 inspect the actual error rather than treating every verification failure as
 expected. Development signatures and optimized validation builds do not establish
@@ -21,7 +22,8 @@ Use `apksigner` and `zipalign` from the SDK Build Tools selected for the build.
 
 1. Select the intended production keystore and alias. For updates, preserve the
    existing application ID and signing identity; plan any supported key rotation
-   separately. Increment `versionCode` appropriately before building an update.
+   separately. Build with the version/code already selected for this release cycle;
+   signing does not bump them. A changed distributed APK requires a higher code.
 2. Store the keystore outside the repository and back it up securely. Never commit
    private keys, passwords, or signing properties. Use interactive password prompts
    rather than command-line password arguments or shell history.
