@@ -7,13 +7,13 @@ use `gradlew.bat` and adapt environment-variable and path syntax as needed.
 
 - JDK 17, with `JAVA_HOME` selecting it.
 - Android SDK command-line tools and Platform Tools (`adb`).
-- SDK platform `android-37` and Build Tools `36.0.0`.
+- SDK platform `android-37.0` (API 37) and Build Tools `36.0.0`.
 - Python 3 for verification scripts; FFmpeg/ffprobe for synthetic device fixtures.
 
 Install the SDK packages with Android Studio's SDK Manager or `sdkmanager`:
 
 ```sh
-sdkmanager 'platforms;android-37' 'build-tools;36.0.0' 'platform-tools'
+sdkmanager 'platforms;android-37.0' 'build-tools;36.0.0' 'platform-tools'
 ```
 
 Accept the SDK licenses when prompted. Set `ANDROID_HOME` to your SDK directory,
@@ -29,6 +29,14 @@ source of truth for these versions; do not replace it with global Gradle setting
 The first build may download the wrapper, plugins, and dependencies. Later builds
 can add `--offline` when all required artifacts are cached. Build-time downloads
 do not add networking to the installed app.
+
+The [CI workflow](../.github/workflows/android.yml) uses GitHub's
+[Ubuntu 24.04 image](https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md).
+It selects JDK 17 in a separate step before installing SDK packages, since
+[`GITHUB_ENV` and `GITHUB_PATH`](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-commands#environment-files)
+apply to subsequent steps. It invokes the preinstalled SDK manager through
+`$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager`, without requiring it on
+`PATH`, and explicitly installs the SDK platform and Build Tools listed above.
 
 ## Build variants
 
